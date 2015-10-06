@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>AppTI2015</Name>
+    <ProjectGuid>3c951b53-025a-4bbb-b9bf-36a79f25cd95</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>AppTI2015</RootNamespace>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+    <AssemblyName>AppTI2015</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="codesource\index.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="views\Cadastro_Nova_tarefa.html" />
+    <Content Include="views\Cadastro_Usuario.html" />
+    <Content Include="style\estilos.css" />
+    <Content Include="views\login.html" />
+    <Content Include="views\Menu.html" />
+    <Content Include="views\pontos.html" />
+    <Content Include="views\Relatorio.html" />
+    <Content Include="views\Relatorio1.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="codesource\" />
+    <Folder Include="views\" />
+    <Folder Include="style\" />
+  </ItemGroup>
+</Project>

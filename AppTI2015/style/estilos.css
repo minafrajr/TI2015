@@ -1,0 +1,32 @@
+/* CSS Document */
+h1 {
+	color: #2E9AFE;
+}
+
+.descricao {
+	height: 50px;
+}
+
+table {
+	border: 2px solid;
+	border-collapse: collapse;
+	border-color: black;
+}
+
+th {
+	border: 1px solid black;
+	background-color: #A9A9A9;
+}
+
+td {
+	text-align: center;
+	border: 1px solid black;
+}
+
+.even {
+	background-color: #dcdcdc;
+}
+
+.odd {
+	background-color: #FFFFFF;
+}
