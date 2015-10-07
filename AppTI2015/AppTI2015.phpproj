@@ -16,10 +16,16 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="codesource\index.php" />
+    <Compile Include="controller\Cadastrao_nova_tarefa_control.php" />
+    <Compile Include="controller\cadastra_usuario_control.php" />
+    <Compile Include="views\cadastra_tarefa.php" />
+    <Compile Include="views\index.php" />
+    <Compile Include="data\conect.php" />
+    <Compile Include="views\cadastra_usuario.php" />
+    <Compile Include="views\login.php" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="views\Cadastro_Nova_tarefa.html" />
+    <Content Include="js\validacao_form.js" />
     <Content Include="views\Cadastro_Usuario.html" />
     <Content Include="style\estilos.css" />
     <Content Include="views\login.html" />
@@ -29,7 +35,10 @@
     <Content Include="views\Relatorio1.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="codesource\" />
+    <Folder Include="controller\" />
+    <Folder Include="model\" />
+    <Folder Include="data\" />
+    <Folder Include="js\" />
     <Folder Include="views\" />
     <Folder Include="style\" />
   </ItemGroup>

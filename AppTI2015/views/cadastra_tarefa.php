@@ -1,3 +1,7 @@
+<?php
+
+header('Content-Type: text/html; charset=utf-8');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -6,8 +10,12 @@
         <meta charset="UTF-8">
         <meta name="description" content="Cadastro de novas tarefas">
         <meta name="keywords" content="">
-        <meta name="author" content="SAD SoluÃ§Ãµes Web">
-        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <meta name="author" content="SAD Soluções Web">
+        <link rel="stylesheet" type="text/css" href="..\style\estilos.css">
+
+        <script >
+
+        </script>
     </head>
 
     <body>
@@ -40,13 +48,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>DuraÃ§Ã£o</td>
+                    <td>Duração</td>
                     <td>
                         <input type="time" name="hora">
                     </td>
                 </tr>
                 <tr>
-                    <td>DescriÃ§Ã£o</td>
+                    <td>Descrição</td>
                     <td>
                         <input class="descricao" name="descri" type="text">
                     </td>
