@@ -26,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="js\validacao_form.js" />
-    <Content Include="views\Cadastro_Usuario.html" />
     <Content Include="style\estilos.css" />
     <Content Include="views\login.html" />
     <Content Include="views\Menu.html" />

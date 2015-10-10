@@ -21,12 +21,12 @@ header('Content-Type: text/html; charset=utf-8');
 <body>
 	<h1>Novo Usuario </h1>
 
-	<form id="frm1" method="GET" action="controller\cadastra_usuario_control.php">
+	<form id="frm1" method="POST" action="..\controller\cadastra_usuario_control.php">
 		<table id="usuario" cellspacing="10">
 			<tr>
 				<td>Nome:</td>
 				<td>
-					<input type="text" id="NomeUsuario" name="nomeU" value="Digite seu nome">
+					<input type="text" id="NomeUsuario" name="nomeU" Placeholder="Digite seu nome">
 					<em>*</em>
 				</td>
 			</tr>
@@ -59,6 +59,12 @@ header('Content-Type: text/html; charset=utf-8');
 				</td>
 			</tr>
 			<tr>
+				<td>Escolher Avatar:</td>
+				<td>
+					<input type="file" name="avatarToUpload" id="avatarToUpload">
+				</td>
+			</tr>
+			<tr>
 				<td>* Campos Obrigatorios</td>
 			</tr>
 			<tr>
@@ -70,6 +76,11 @@ header('Content-Type: text/html; charset=utf-8');
 				</td>
 			</tr>
 		</table>
+		<br />
+		
+		
 	</form>
+
+
 </body>
 </html>

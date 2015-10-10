@@ -1,9 +1,10 @@
 <?php
 
 header('Content-Type: text/html; charset=utf-8');
-if(empty($_SESSION)){
-	http_redirect("login.php");
 
+if(empty($_SESSION['user'])){
+
+	header("Location: cadastra_usuario.php"); 
 }
 
 ?>

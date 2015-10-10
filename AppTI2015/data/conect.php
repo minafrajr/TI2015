@@ -3,8 +3,8 @@
 $username = "root"; //usuário do banco
 $password = "1234"; //senha do banco
 $host = "localhost"; //endereço do banco
-//$dbname = "tp_tarefas"; //nome do database
-$dbname = "siesc"; //nome do database
+$dbname = "tp_tarefas"; //nome do database
+//$dbname = "siesc"; //nome do database
 
 
 //inicializa o banco para utf8
@@ -39,23 +39,22 @@ session_start();
 
 
 //teste simples para conexão
-try {
+//try {
    
-    $stmt = $conn->prepare("SELECT idAno, AnoEF FROM ano"); 
-    $stmt->execute();
+//    $stmt = $conn->prepare("SELECT idAno, AnoEF FROM ano"); 
+//    $stmt->execute();
 
-    // set the resulting array to associative
-    $result = $stmt->fetchAll(); 
+//    // set the resulting array to associative
+//    $result = $stmt->fetchAll(); 
      
-   foreach ($result as $linha)
-    {
-        echo $linha['idAno']."  ".$linha['AnoEF']."<br/>";
-    }
+//   foreach ($result as $linha)
+//    {
+//        echo $linha['idAno']."  ".$linha['AnoEF']."<br/>";
+//    }
 
-}
-catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
-$conn = null;
+//}
+//catch(PDOException $e) {
+//    echo "Error: " . $e->getMessage();
+//}
 
 ?>
