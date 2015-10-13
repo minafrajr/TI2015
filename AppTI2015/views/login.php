@@ -1,5 +1,9 @@
 <?php
 
+header('Content-Type: text/html; charset=utf-8');
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -16,22 +20,22 @@
 
     <body>
          <h1> Login </h1>
-        <form>
+        <form method="POST" action="..\controller\login_control.php">
             <table id="tarefas" cellspacing="10">
                 <tr>
-                    <td>Email</td>
+                    <td>Email: </td>
                     <td>
-                        <input type="text" name="email">
+                        <input type="text" name="email" Placeholder="seu email">
                     </td>
                     <tr>
                         <td>Senha:</td>
                         <td>
-                            <input type="password" name="senha">
+                            <input type="password" name="senha" Placeholder="sua senha">
                         </td>
                     </tr>
                     <tr>
                     <td>
-                        <input type="submit" name="Enviar" value="OK">
+                        <input type="submit" name="Enviar" value="Entrar">
                     </td>
 
                     <td>
@@ -42,6 +46,8 @@
 
             </table>
         </form>
+        <br />
+        <div> <a href="cadastra_usuario.php">Cadastre-se</a></div>
     </body>
 
 </html>

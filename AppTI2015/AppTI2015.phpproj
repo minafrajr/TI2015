@@ -16,18 +16,19 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="controller\Cadastrao_nova_tarefa_control.php" />
+    <Compile Include="controller\Cadastra_nova_tarefa_control.php" />
     <Compile Include="controller\cadastra_usuario_control.php" />
+    <Compile Include="controller\login_control.php" />
     <Compile Include="views\cadastra_tarefa.php" />
     <Compile Include="views\index.php" />
     <Compile Include="data\conect.php" />
     <Compile Include="views\cadastra_usuario.php" />
     <Compile Include="views\login.php" />
+    <Compile Include="views\Menu.php" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="js\validacao_form.js" />
     <Content Include="style\estilos.css" />
-    <Content Include="views\login.html" />
     <Content Include="views\Menu.html" />
     <Content Include="views\pontos.html" />
     <Content Include="views\Relatorio.html" />
