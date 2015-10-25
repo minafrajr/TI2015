@@ -1,16 +1,112 @@
 /* CSS Document */
+
+body {
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	font-size: 17px;
+}
+
+.container {
+	position: relative;
+	display: block;
+	width: 450px;
+}
+
+.titulo button {
+	float: right;
+	font-size: 30px;
+}
+
 h1 {
 	color: #2E9AFE;
+	font-size: 50px;
 }
 
-.descricao {
-	height: 50px;
+.filtro {
+	display: block;
+	position: relative;
 }
 
-table {
-	border: 2px solid;
+.linha {
+	position: relative;
+	width: 100%;
+	margin: 10px;
+}
+
+.label {
+	float: left;
+	width: 120px;
+}
+
+.campo {
+	width: 275px;
+	margin-left: 120px;
+}
+
+.campo input[type="text"], .campo input[type="date"], .campo input[type="range"], .campo select {
+	width: 100%;
+}
+
+.tarefa .descricao-tarefa, .tarefa .importancia-tarefa {
+	border: 1px solid #000;
+	cursor: pointer;
+}
+
+.tarefa .descricao-tarefa {
+	float: left;
+	width: 380px;
+	padding: 10px;
+}
+
+.tarefa .importancia-tarefa {
+	margin-left: 400px;
+	padding: 10px;
+	width: 30px;
+	text-align: center;
+}
+
+.tarefa .detalhe {
+	border: 1px solid #000;
+	position: relative;
+	padding: 10px;
+	margin-left: 2px;
+}
+
+#menu {
+	position: absolute;
+	width: 200px;
+	background-color: #FFFFFF;
+	top: 45px;
+	left: 0;
+	border-right: 1px solid #000000;
+	padding: 10px;
+}
+
+.margin {
+	margin-left: 220px;
+}
+
+.icone-menu {
+	transform: rotate(270deg);
+	transform-origin: left top 0;
+	float: left;
+	margin-top: 50px;
+	margin-left: -20px;
+	font-size: 34px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.hide {
+	display: none;
+}
+
+.clear {
+	clear: both;
+}
+
+#relatorio_table {
+	border: 2px solid black;
 	border-collapse: collapse;
-	border-color: black;
 }
 
 th {
@@ -18,17 +114,26 @@ th {
 	background-color: #A9A9A9;
 }
 
-td {
+.tab {
 	text-align: center;
 	border: 1px solid black;
 }
 
 .even {
-	background-color: #dcdcdc;
+	background-color: #DCDCDC;
 }
 
 .odd {
 	background-color: #FFFFFF;
+}
+
+#menu {
+
+	text-align: center;
+}
+
+#usuario {
+	font-size: 14px;
 }
 
 .error {

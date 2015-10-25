@@ -1,7 +1,5 @@
+<?php $tela = 'Novo Usuario' ?>
 <?php require_once 'header.php' ?>
-<?php require_once '../controller/cadastra_usuario_control.php' ?>
-    <h1>Novo Usuario </h1>
-    <?php require_once 'messages.php' ?>
 
     <form id="frm1" method="post" action="" onsubmit="return validaFormCadastroUsuario()" enctype="multipart/form-data">
         <table id="usuario" cellspacing="10">

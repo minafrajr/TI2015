@@ -3,7 +3,7 @@
     <html>
 
     <head>
-        <title>AlertSistem - Bem vindo</title>
+        <title>AlertSistem - <?= $tela ?: 'Bem vindo' ?></title>
         <meta charset="UTF-8">
         <meta name="description" content="Tela de login">
         <meta name="keywords" content="">
@@ -12,4 +12,5 @@
     </head>
 
     <body>
-
+        <h1><?= $tela ?: 'AlertSistem' ?></h1>
+        <?php require_once 'messages.php' ?>

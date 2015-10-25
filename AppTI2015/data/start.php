@@ -2,6 +2,10 @@
 // Inicia a sessão. Deve ser a primeira coisa a ser chamada
 session_start();
 
+if (!isset($tela)) {
+    $tela = null;
+}
+
 // Define o tipo de resposta da requisição e o charset
 header('Content-Type: text/html; charset=utf-8');
 
@@ -20,3 +24,9 @@ if (empty($_SESSION['usuario']) && !in_array($_SERVER['PHP_SELF'], $ignorarSessa
 // Conecta ao banco
 require_once('connect.php');
 require_once('functions.php');
+
+$controllerName = str_replace('.php', '', $_SERVER['SCRIPT_NAME']) . '_control.php';
+
+if (file_exists('../controller' . $controllerName)) {
+    require_once '../controller' . $controllerName;
+}

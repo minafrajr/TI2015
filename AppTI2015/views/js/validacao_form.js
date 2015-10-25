@@ -29,9 +29,42 @@
         return false;
     }
 
-    if ($senha.value !== $confSenha.value) {
-        alert('As senhas devem ser idênticas');
-        $confSenha.focus();
+    if ($senha.value === '') {
+        alert('Preencha a senha');
+        $senha.focus();
+        return false;
+    }
+
+    return true;
+}
+
+function validaFormCadastroTarefa() {
+    var $nome = document.querySelector('#nome'),
+        $prioridade = document.querySelector('#prioridade'),
+        $data = document.querySelector('#data'),
+        $duracao = document.querySelector('#duracao');
+
+    if ($nome.value === '') {
+        alert('Preencha o campo nome');
+        $nome.focus();
+        return false;
+    }
+
+    if ($prioridade.value === '') {
+        alert('Preencha o campo prioridade');
+        $nome.focus();
+        return false;
+    }
+
+    if ($data.value === '') {
+        alert('Preencha o campo data');
+        $nome.focus();
+        return false;
+    }
+
+    if ($duracao.value === '') {
+        alert('Preencha o campo duração');
+        $nome.focus();
         return false;
     }
 
