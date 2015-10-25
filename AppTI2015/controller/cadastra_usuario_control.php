@@ -1,26 +1,40 @@
 <?php
 
-require_once("../data/connect.php");//conexão com o banco.
+try {
+	if (!empty($_POST)) {
+        $nome = $_POST['nome'];
+        $dataNascimento = $_POST['dataNascimento'];
+        $senha = $_POST['senha'];
+        $email = $_POST['email'];
 
-try
-{
-	if (!empty($_POST))
-	{
-		$query="INSERT INTO usuario (NomUsu,DatNasUsu,SenUsu,EmaUsu)
-				VALUES(:NomUsu,:DatNasUsu,:SenUsu,:EmaUsu)";
+        $query = "SELECT CodUsu FROM usuario WHERE EmaUsu = :EmaUsu;";
 
-		$query_params =array(':NomUsu'=> $_POST["nomeU"],'DatNasUsu'=>$_POST["dataN"],'SenUsu'=>$_POST["senha"],'EmaUsu'=>$_POST["email"]);
+        /** @var $stmt PDOStatement */
+        $stmt = $conn->prepare($query);
+        $result = $stmt->execute([':EmaUsu' => $email]);
+        $all = $stmt->fetchAll();
 
-		$stmt = $conn -> prepare($query);
-		$result = $stmt -> execute($query_params);
+        if (!empty($all)) {
+            throw new Exception("Usuário com e-mail {$email} já existe!");
+        }
+
+		$query = "INSERT INTO usuario (NomUsu, DatNasUsu, SenUsu, EmaUsu)
+				  VALUES(:NomUsu, :DatNasUsu, MD5(:SenUsu), :EmaUsu);";
+
+		$query_params = [
+            ':NomUsu'    => $nome,
+            ':DatNasUsu' => $dataNascimento,
+            ':SenUsu'    => $senha,
+            ':EmaUsu'    => $email
+		];
+
+		$stmt = $conn->prepare($query);
+		$result = $stmt->execute($query_params);
+
+        setSuccessMessage('Usuário salvo com sucesso!');
 	}
+} catch (PDOException $ex) {
+	setErrorMessage("Erro ao inserir no banco: " . $ex->getMessage());
+} catch (Exception $ex) {
+    setErrorMessage("Erro ao salvar o usuário: " . $ex->getMessage());
 }
-catch (PDOException $ex)
-{
-	die("Failed: " . $ex->getMessage());
-}
-
-
-?>
-
-

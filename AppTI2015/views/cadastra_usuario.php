@@ -1,52 +1,53 @@
 <?php require_once 'header.php' ?>
 <?php require_once '../controller/cadastra_usuario_control.php' ?>
     <h1>Novo Usuario </h1>
+    <?php require_once 'messages.php' ?>
 
-    <form id="frm1" method="POST" action="">
+    <form id="frm1" method="post" action="" onsubmit="return validaFormCadastroUsuario()" enctype="multipart/form-data">
         <table id="usuario" cellspacing="10">
             <tr>
-                <td>Nome:</td>
+                <td><label for="nome">Nome:</label></td>
                 <td>
-                    <input type="text" id="NomeUsuario" name="nomeU" Placeholder="Digite seu nome">
+                    <input required type="text" id="nome" name="nome" Placeholder="Digite seu nome">
                     <em>*</em>
                 </td>
             </tr>
             <tr>
-                <td>Email:</td>
+                <td><label for="email">Email:</label></td>
                 <td>
-                    <input type="email" name="email">
-                    <em>*</em>
-            </tr>
-            <tr>
-                <td>Data de Nascimento:</td>
-                <td>
-                    <input type="date" name="dataN">
-                    <em>*</em>
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td>Senha:</td>
-                <td>
-                    <input type="password" name="senha">
+                    <input required type="email" id="email" name="email">
                     <em>*</em>
                 </td>
             </tr>
             <tr>
-                <td>Confirmar Senha:</td>
+                <td><label for="dataNascimento">Data de Nascimento:</label></td>
                 <td>
-                    <input type="password" name="conf_senha">
+                    <input required type="date" name="dataNascimento" id="dataNascimento">
                     <em>*</em>
                 </td>
             </tr>
             <tr>
-                <td>Escolher Avatar:</td>
+                <td><label for="senha">Senha:</label></td>
+                <td>
+                    <input required type="password" id="senha" name="senha">
+                    <em>*</em>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="conf_senha">Confirmar Senha:</label></td>
+                <td>
+                    <input required type="password" id="conf_senha" name="conf_senha">
+                    <em>*</em>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="avatarToUpload">Escolher Avatar:</label></td>
                 <td>
                     <input type="file" name="avatarToUpload" id="avatarToUpload">
                 </td>
             </tr>
             <tr>
-                <td>* Campos Obrigatorios</td>
+                <td colspan="2">* Campos Obrigatorios</td>
             </tr>
             <tr>
                 <td>
@@ -58,8 +59,6 @@
             </tr>
         </table>
         <br />
-
-
     </form>
-
+    <script type="text/javascript" src="/js/validacao_form.js"></script>
 <?php require_once 'footer.php' ?>
