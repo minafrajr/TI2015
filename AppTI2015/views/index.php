@@ -4,7 +4,6 @@ session_start();
 header('Content-Type: text/html; charset=utf-8');
 
 if(empty($_SESSION['user'])){
-
 	header("Location: login.php"); 
 }
 
@@ -18,8 +17,8 @@ if(empty($_SESSION['user'])){
 	<meta charset="UTF-8">
 	<meta name="description" content="Cadastro de novas tarefas">
 	<meta name="keywords" content="">
-	<meta name="author" content="SAD SoluÁıes Web">
-	<link rel="stylesheet" type="text/css" href="..\style\estilos.css">
+	<meta name="author" content="SAD Solu√ß√µes Web">
+	<link rel="stylesheet" type="text/css" href="/style/estilos.css">
 
 	<script>
 
@@ -33,7 +32,7 @@ if(empty($_SESSION['user'])){
 		<a href="cadastra_tarefa.php">Cadastrar Tarefa</a>
 	</div>
 	<br />
-	<div> <a href="cadastra_usuario.php">cadastra usu·rio</a></div>
+	<div> <a href="cadastra_usuario.php">Cadastrar usu√°rio</a></div>
 	
 </body>
 </html>

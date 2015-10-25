@@ -14,8 +14,8 @@ header('Content-Type: text/html; charset=utf-8');
         <meta charset="UTF-8">
         <meta name="description" content="Tela de login">
         <meta name="keywords" content="">
-        <meta name="author" content="SAD Soluções Web">
-        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <meta name="author" content="SAD Soluï¿½ï¿½es Web">
+        <link rel="stylesheet" type="text/css" href="/style/estilos.css">
     </head>
 
     <body>

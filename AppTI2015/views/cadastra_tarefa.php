@@ -11,8 +11,8 @@ header('Content-Type: text/html; charset=utf-8');
 	<meta charset="UTF-8">
 	<meta name="description" content="Cadastro de novas tarefas">
 	<meta name="keywords" content="">
-	<meta name="author" content="SAD Soluções Web">
-	<link rel="stylesheet" type="text/css" href="..\style\estilos.css">
+	<meta name="author" content="SAD Soluï¿½ï¿½es Web">
+	<link rel="stylesheet" type="text/css" href="/style/estilos.css">
 
 	<script>
 
@@ -21,7 +21,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 <body>
 	<h1>Nova Tarefa </h1>
-	<form id="frm_new_tarefa" method="post" action="..\controller\Cadastra_nova_tarefa_control.php">
+	<form id="frm_new_tarefa" method="post" action="../controller/Cadastra_nova_tarefa_control.php">
 		<table id="tarefas" cellspacing="10">
 			<tr>
 				<td>Nome:</td>
@@ -49,13 +49,13 @@ header('Content-Type: text/html; charset=utf-8');
 				</td>
 			</tr>
 			<tr>
-				<td>Duração</td>
+				<td>Duraï¿½ï¿½o</td>
 				<td>
 					<input type="time" name="hora">
 				</td>
 			</tr>
 			<tr>
-				<td>Descrição</td>
+				<td>Descriï¿½ï¿½o</td>
 				<td>
 					<input class="descricao" name="descri" type="text">
 				</td>

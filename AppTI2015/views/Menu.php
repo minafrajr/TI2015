@@ -10,8 +10,8 @@
         <meta charset="UTF-8">
         <meta name="description" content="Tela de Menu da Agenda">
         <meta name="keywords" content="Agenda">
-        <meta name="author" content="SAD Soluções Web">
-        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <meta name="author" content="SAD Soluï¿½ï¿½es Web">
+        <link rel="stylesheet" type="text/css" href="/style/estilos.css">
     </head>
 
     <body>
@@ -33,7 +33,7 @@
                 <tr>
                     
                     <td>
-                        <input type="submit" name="menu" value="Pontuação">
+                        <input type="submit" name="menu" value="Pontuaï¿½ï¿½o">
                     </td>
                 </tr>
                 <tr>

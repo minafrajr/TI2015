@@ -1,6 +1,6 @@
 <?php
 
-require_once ("..\data\conect.php");//conexão com o banco.
+require_once("..\data\connect.php");//conexï¿½o com o banco.
 
 try
 {

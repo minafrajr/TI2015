@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
-require_once ("..\data\conect.php");//conexão com o banco.
+require_once("..\data\connect.php");//conexï¿½o com o banco.
 
 try
 {
@@ -12,7 +12,7 @@ try
 				  FROM usuario 
 				  WHERE SenUsu= :senhaUsu and EmaUsu = :emailUsu";
 
-		//repassa os parâmetros
+		//repassa os parï¿½metros
 		$query_params = array(':senhaUsu'=>$_POST["senha"], ':emailUsu'=> $_POST["email"]);
 		
 		//executa a consulta no banco
@@ -28,7 +28,7 @@ try
 			$_SESSION['user'] = $result[0]['NomUsu'];
 			$_SESSION['email'] = $result[0]['EmaUsu'];
 			
-			//encaminha para a página inicial.
+			//encaminha para a pï¿½gina inicial.
 			header("Location: ../views/index.php"); 
 		}
 		else{

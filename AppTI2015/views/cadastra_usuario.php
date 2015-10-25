@@ -10,8 +10,8 @@ header('Content-Type: text/html; charset=utf-8');
 	<meta charset="UTF-8">
 	<meta name="description" content="Cadastro de novas tarefas">
 	<meta name="keywords" content="">
-	<meta name="author" content="SAD Soluções Web">
-	<link rel="stylesheet" type="text/css" href="..\style\estilos.css">
+	<meta name="author" content="SAD Soluï¿½ï¿½es Web">
+	<link rel="stylesheet" type="text/css" href="/style/estilos.css">
 
 	<script>
 
