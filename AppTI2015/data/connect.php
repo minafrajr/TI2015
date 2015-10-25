@@ -1,60 +1,29 @@
 <?php
 
-$username = "root"; //usu·rio do banco
-$password = "1234"; //senha do banco
-$host = "localhost"; //endereÁo do banco
+//$username = "root"; //usu√°rio do banco
+//$password = "1234"; //senha do banco
+//$host = "localhost"; //endere√ßo do banco
+//$dbname = "tp_tarefas"; //nome do database
+
+$username = "root"; //usu√°rio do banco
+$password = "maxmilhas"; //senha do banco
+$host = "10.10.10.101"; //endere√ßo do banco
 $dbname = "tp_tarefas"; //nome do database
-//$dbname = "siesc"; //nome do database
 
-
-//inicializa o banco para utf8
-//$options - array(PDO::MYSQL_ATTR_INIT_COMMAND =>'SET NAME utf8');
-
-
-try{
-    //cria a conex„o com o banco
-    //$conn = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $username, $password, $options);
+try {
+    //cria a conex√£o com o banco
     $conn = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $username, $password);
-    
+
     //codifica para o utf8
-    $conn ->exec("set names utf8");
-}
-catch(PDOException $ex){
-    //se a conex„o falhar
+    $conn->exec("set names utf8");
+} catch (PDOException $ex) {
+    //se a conex√£o falhar
     die("Falha ao conectar com o banco!<br/>Erro: " . $ex->getMessage());
 }
 
-//configura o PDO para lanÁar a exception
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+//configura o PDO para lan√ßar a exception
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-//configura o PDO para retornar do banco um array com Ìndices de string.
+//configura o PDO para retornar do banco um array com √≠ndices de string.
 //Assim a string representa o nome da coluna
-$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); 
-
-
-header('Content-Type: text/html; charset=utf-8');
-
-session_start(); 
-
-
-
-//teste simples para conex„o
-//try {
-   
-//    $stmt = $conn->prepare("SELECT idAno, AnoEF FROM ano"); 
-//    $stmt->execute();
-
-//    // set the resulting array to associative
-//    $result = $stmt->fetchAll(); 
-     
-//   foreach ($result as $linha)
-//    {
-//        echo $linha['idAno']."  ".$linha['AnoEF']."<br/>";
-//    }
-
-//}
-//catch(PDOException $e) {
-//    echo "Error: " . $e->getMessage();
-//}
-
-?>
+$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
