@@ -33,8 +33,7 @@ try {
 
         setSuccessMessage('Usuário salvo com sucesso!');
 
-        // Redireciona para a própria tela, para evitar submeter novamente o formulário com F5
-        header("Location: {$_SERVER['PHP_SELF']}");
+        redirect('/');
 	}
 } catch (PDOException $ex) {
 	setErrorMessage("Erro ao inserir no banco: " . $ex->getMessage());

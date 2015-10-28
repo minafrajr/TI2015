@@ -1,28 +1,7 @@
-<?php require_once 'header.php' ?>
-    <h1>Menu Agenda</h1>
-    <form>
-        <table id="menu" cellspacing="10">
-            <tr>
-
-                <td>
-                    <input type="submit" name="menu" value="Nova Tarefa">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" name="menu" value="Tarefas Concluídas">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" name="menu" value="Pontuação">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" name="menu" value="Relatório">
-                </td>
-            </tr>
-        </table>
-    </form>
-<?php require_once 'footer.php' ?>
+<div class="menu hide">
+    <button onclick="window.location.href = '/cadastra_usuario.php'">Novo usuário</button>
+    <button onclick="window.location.href = '/cadastra_tarefa.php'">Nova tarefa</button>
+    <button onclick="window.location.href = '/tarefas_concluidas.php'">Tarefas concluídas</button>
+    <button onclick="window.location.href = '/pontos.php'">Pontuação</button>
+    <button onclick="window.location.href = '/relatorio.php'">Relatórios</button>
+</div>

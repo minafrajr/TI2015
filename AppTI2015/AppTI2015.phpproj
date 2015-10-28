@@ -27,7 +27,7 @@
     <Compile Include="views\Menu.php" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="js\validacao_form.js" />
+    <Content Include="js\main.js" />
     <Content Include="style\estilos.css" />
     <Content Include="views\Menu.html" />
     <Content Include="views\pontos.html" />

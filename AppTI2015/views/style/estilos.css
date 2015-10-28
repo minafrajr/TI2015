@@ -40,6 +40,7 @@ h1 {
 .campo {
 	width: 275px;
 	margin-left: 120px;
+	position: relative;
 }
 
 .campo input[type="text"], .campo input[type="date"], .campo input[type="range"], .campo select {
@@ -71,7 +72,7 @@ h1 {
 	margin-left: 2px;
 }
 
-#menu {
+.menu {
 	position: absolute;
 	width: 200px;
 	background-color: #FFFFFF;
@@ -79,6 +80,10 @@ h1 {
 	left: 0;
 	border-right: 1px solid #000000;
 	padding: 10px;
+}
+
+.menu button {
+	width: 100%;
 }
 
 .margin {
@@ -127,15 +132,6 @@ th {
 	background-color: #FFFFFF;
 }
 
-#menu {
-
-	text-align: center;
-}
-
-#usuario {
-	font-size: 14px;
-}
-
 .error {
 	font-weight: bold;
 	color: red;
@@ -144,4 +140,15 @@ th {
 .success {
 	font-weight: bold;
 	color: green;
+}
+
+/* Código retirado do site https://css-tricks.com/value-bubbles-for-range-inputs/ */
+output {
+	position: absolute;
+	width: 40px;
+	height: 30px;
+	text-align: center;
+	display: inline-block;
+	bottom: 75%;
+	left: 0;
 }

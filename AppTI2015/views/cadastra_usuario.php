@@ -27,14 +27,14 @@
             <tr>
                 <td><label for="senha">Senha:</label></td>
                 <td>
-                    <input required type="password" id="senha" name="senha">
+                    <input required pattern=".{6,}" type="password" id="senha" name="senha">
                     <em>*</em>
                 </td>
             </tr>
             <tr>
                 <td><label for="conf_senha">Confirmar Senha:</label></td>
                 <td>
-                    <input required type="password" id="conf_senha" name="conf_senha">
+                    <input required pattern=".{6,}" type="password" id="conf_senha" name="conf_senha">
                     <em>*</em>
                 </td>
             </tr>
@@ -58,5 +58,4 @@
         </table>
         <br />
     </form>
-    <script type="text/javascript" src="/js/validacao_form.js"></script>
 <?php require_once 'footer.php' ?>

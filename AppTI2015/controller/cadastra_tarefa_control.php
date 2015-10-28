@@ -3,24 +3,36 @@ $codUsu = $_SESSION['usuario']['codigo'];
 
 try {
     if (!empty($_POST)) {
-        $query = "INSERT INTO tarefa (CodUsu_Tar, NomTar, DesTar, DatIniTar, TepTar)
-                  VALUES (:CodigoUsu, :NomeTar, :descricaoTar, :dataIniTarefa, :tepTarefa)";
+        $query =
+            "INSERT
+                INTO tarefa (CodUsu_Tar, NomTar, DesTar, DatIniTar, DatTerTar, TepTar, PonTar)
+                VALUES (
+                    :CodUsu_Tar,
+                    :NomTar,
+                    :DesTar,
+                    STR_TO_DATE(:DatIniTar, '%Y-%m-%dT%H:%i'),
+                    DATE_ADD(STR_TO_DATE(:DatIniTar, '%Y-%m-%dT%H:%i'), INTERVAL :TepTar HOUR_MINUTE),
+                    :TepTar,
+                    :PonTar
+                )";
 
         $query_params = [
-            ':CodigoUsu'     => $codUsu,
-            ':NomeTar'       => $_POST["nome"],
-            ':descricaoTar'  => $_POST["descricao"],
-            ':dataIniTarefa' => $_POST["data"],
-            ':tepTarefa'     => $_POST["hora"]
+            ':CodUsu_Tar' => $codUsu,
+            ':NomTar'     => $_POST["nome"],
+            ':DesTar'     => $_POST["descricao"],
+            ':DatIniTar'  => $_POST["data"],
+            ':TepTar'     => $_POST["duracao"],
+            ':PonTar'     => $_POST["prioridade"]
         ];
 
         $stmt = $conn->prepare($query);
         $result = $stmt->execute($query_params);
 
         if ($result) {
-            header("Location: /index.php");
+            setSuccessMessage('Tarefa adicionada com sucesso!');
+            redirect('/index.php');
         }
     }
 } catch (PDOException $ex) {
-    die("Failed: " . $ex->getMessage());
+    setErrorMessage($ex->getMessage());
 }

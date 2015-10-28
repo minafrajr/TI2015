@@ -32,7 +32,7 @@
         <div class="linha">
             <div class="label"><label for="data"><em>*</em> Data:</label></div>
             <div class="campo">
-                <input type="date" name="data" id="data" required />
+                <input type="datetime-local" name="data" id="data" required />
             </div>
         </div>
         <div class="linha">
@@ -56,5 +56,4 @@
             </div>
         </div>
     </form>
-    <script type="text/javascript" src="/js/validacao_form.js"></script>
 <?php require_once 'footer.php' ?>

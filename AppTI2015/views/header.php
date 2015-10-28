@@ -12,5 +12,13 @@
     </head>
 
     <body>
-        <h1><?= $tela ?: 'AlertSistem' ?></h1>
-        <?php require_once 'messages.php' ?>
+        <?php require_once 'menu.php' ?>
+        <div class="container">
+            <div class="titulo">
+                <span class="icone-menu">...</span>
+                <h1>
+                    <?= $tela ?: 'AlertSistem' ?>
+                    <!--<button onclick="window.location.href = 'Cadastro_Nova_tarefa.html'" title="Nova tarefa">+</button>-->
+                </h1>
+            </div>
+            <?php require_once 'messages.php' ?>

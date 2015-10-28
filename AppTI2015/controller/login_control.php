@@ -25,7 +25,7 @@ try {
 
             //encaminha para a página inicial.
             setSuccessMessage('Bem vindo ao sistema, ' . $_SESSION['usuario']['nome']);
-            header("Location: /index.php");
+            redirect('/');
         } else {
             throw new Exception('Usuário e senha inválidos');
         }
