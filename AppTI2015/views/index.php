@@ -1,24 +1,24 @@
 <?php require_once 'header.php' ?>
-    <form class="filtro">
+    <form id="filtro" method="post" action="">
         <div class="linha">
             <div class="label"><label for="duracao">Duração até:</label></div>
             <div class="campo">
-                <input type="range" name="duracao" id="duracao" min="0" max="23" step="1" value="0" />
+                <input type="range" name="duracao" id="duracao" min="0" max="23" step="1" value="<?= getParam('duracao', 0) ?>" />
                 <output for="duracao"></output>
             </div>
             <div class="clear"></div>
         </div>
         <div class="linha">
             <div class="label"><label for="data">Data:</label></div>
-            <div class="campo"><input type="date" id="data" /></div>
+            <div class="campo"><input type="date" id="data" name="data" value="<?= getParam('data') ?>" /></div>
             <div class="clear"></div>
         </div>
         <div class="linha">
             <div class="label"><label for="ordenar">Ordenar por:</label></div>
             <div class="campo">
-                <select id="ordenar">
-                    <option value="data">Data</option>
-                    <option value="duracao">Duração</option>
+                <select id="ordenar" name="ordenar">
+                    <option value="DatIniTar" <?= getParam('ordenar', 'DatIniTar') === 'DatIniTar' ? 'selected' : '' ?>>Data</option>
+                    <option value="TepTar" <?= getParam('ordenar', 'DatIniTar') === 'TepTar' ? 'selected' : '' ?>>Duração</option>
                 </select>
             </div>
             <div class="clear"></div>
@@ -55,9 +55,9 @@
                             </div>
                         </div>
                         <div class="linha">
-                            <div class="label">Finalizar</div>
+                            <div class="label"><label for="finalizar_<?= $tarefa['CodTar'] ?>">Finalizar</label></div>
                             <div class="campo">
-                                <input type="checkbox" class="finalizar" />
+                                <input type="checkbox" form="filtro" class="finalizar" id="finalizar_<?= $tarefa['CodTar'] ?>" value="<?= $tarefa['CodTar'] ?>" />
                             </div>
                         </div>
                     </form>

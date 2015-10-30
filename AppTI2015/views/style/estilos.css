@@ -21,7 +21,7 @@ h1 {
 	font-size: 50px;
 }
 
-.filtro {
+#filtro {
 	display: block;
 	position: relative;
 }
@@ -45,6 +45,10 @@ h1 {
 
 .campo input[type="text"], .campo input[type="date"], .campo input[type="range"], .campo select {
 	width: 100%;
+}
+
+.tarefa {
+	margin-bottom: 5px;
 }
 
 .tarefa .descricao-tarefa, .tarefa .importancia-tarefa {

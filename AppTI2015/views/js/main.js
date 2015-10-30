@@ -18,50 +18,14 @@ $(function () {
         $('.menu').toggleClass('hide').next('.container').toggleClass('margin');
     });
 
-    $('.filtro')
-        .on('input', '#duracao', function() {
-            filtrar();
-        })
-        .on('change', '#data', function() {
-            filtrar();
-        })
-        .on('change', '#ordenar', function() {
-            var $ordem = this.value;
-            $('#tarefas').find('.tarefa').each(function() {
-                var self = this;
-                return $.each(Array.prototype.sort.call(self, $ordem), function(i) {
-                    $(this).closest('#tarefas').append(this);
-                });
-            });
+    $('#filtro')
+        .on('change', '#duracao, #data, #ordenar', function() {
+            $('#filtro').submit();
         })
     ;
 
     modifyInputs();
 });
-
-function filtrar()
-{
-    // variável | 0 ==> convertendo valor de variável para inteiro
-    var $duracao = $('#duracao').val() | 0,
-        $data = $('#data').val();
-
-    $('.tarefa').removeClass('hide').each(function() {
-        var $tarefa = $(this),
-        // duracao = valor do campo de duração da tarefa, dividido pelo :, primeira posição, convertido pra inteiro
-            duracao = $tarefa.find('.duracao').val().split(':')[0] | 0,
-            data = $tarefa.find('.data').val().split('T')[0];
-
-        // Se duração da tarefa é menor que a duração do filtro, esconde
-        if ($duracao !== 0 && duracao < $duracao - 1) {
-            $tarefa.addClass('hide');
-        }
-
-        // Se a data do filtro é diferente da data da tarefa, esconde
-        if ($data !== '' && $data != data) {
-            $tarefa.addClass('hide');
-        }
-    });
-}
 
 function validaFormCadastroUsuario() {
     var $nome = document.querySelector('#nome'),
@@ -141,6 +105,8 @@ function duracao(a, b)
     var $a = $(a).find('.duracao').val(),
         $b = $(b).find('.duracao').val();
 
+    console.log('duracao', $a, $b);
+
     if ($a < $b) return -1;
     else if ($a > $b) return 1;
     return 0;
@@ -150,6 +116,8 @@ function data(a, b)
 {
     var $a = new Date($(a).find('.data').val()),
         $b = new Date($(b).find('.data').val());
+
+    console.log('data', $a, $b);
 
     if ($a < $b) return -1;
     else if ($a > $b) return 1;

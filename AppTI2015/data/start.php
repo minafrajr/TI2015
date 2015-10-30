@@ -6,8 +6,10 @@ session_start();
 ob_start();
 
 // Conecta ao banco
-require_once('connect.php');
+require_once('Connect.php');
 require_once('functions.php');
+require_once('../model/Usuario.php');
+require_once('../model/Tarefa.php');
 
 if (!isset($tela)) {
     $tela = null;

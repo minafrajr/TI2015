@@ -28,3 +28,8 @@ function redirect($url)
     header("Location: {$url}", true, 302);
     exit;
 }
+
+function getParam($name, $default = null)
+{
+    return isset($_REQUEST[$name]) ? $_REQUEST[$name] : $default;
+}

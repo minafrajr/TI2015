@@ -18,13 +18,14 @@ try {
 
         $query_params = [
             ':CodUsu_Tar' => $codUsu,
-            ':NomTar'     => $_POST["nome"],
-            ':DesTar'     => $_POST["descricao"],
-            ':DatIniTar'  => $_POST["data"],
-            ':TepTar'     => $_POST["duracao"],
-            ':PonTar'     => $_POST["prioridade"]
+            ':NomTar'     => getParam('nome'),
+            ':DesTar'     => getParam("descricao"),
+            ':DatIniTar'  => getParam("data"),
+            ':TepTar'     => getParam("duracao"),
+            ':PonTar'     => getParam("prioridade")
         ];
 
+        $conn = Connect::getinstance()->getConnection();
         $stmt = $conn->prepare($query);
         $result = $stmt->execute($query_params);
 

@@ -3,32 +3,18 @@
 try {
     if (!empty($_POST)) {
         //consulta
-        $query = "SELECT CodUsu, NomUsu, EmaUsu
-				  FROM usuario 
-				  WHERE SenUsu= MD5(:senhaUsu) AND EmaUsu = :emailUsu";
+        $usuario = Usuario::getByEmailAndPassword(getParam('email'), getParam('senha'));
 
-        //repassa os parãmetros
-        $query_params = [':senhaUsu' => $_POST["senha"], ':emailUsu' => $_POST["email"]];
+        // Define o usuário da sessão
+        $_SESSION['usuario'] = [
+            'codigo' => $usuario->getCodUsu(),
+            'nome'   => $usuario->getNomUsu(),
+            'email'  => $usuario->getEmaUsu()
+        ];
 
-        //executa a consulta no banco
-        $stmt = $conn->prepare($query);
-        $stmt->execute($query_params);
-        $result = $stmt->fetchAll();
-
-        if (!empty($result)) {
-            // Define o usuário da sessão
-            $_SESSION['usuario'] = [
-                'codigo' => $result[0]['CodUsu'],
-                'nome'   => $result[0]['NomUsu'],
-                'email'  => $result[0]['EmaUsu']
-            ];
-
-            //encaminha para a página inicial.
-            setSuccessMessage('Bem vindo ao sistema, ' . $_SESSION['usuario']['nome']);
-            redirect('/');
-        } else {
-            throw new Exception('Usuário e senha inválidos');
-        }
+        //encaminha para a página inicial.
+        setSuccessMessage('Bem vindo ao sistema, ' . $usuario->getNomUsu());
+        redirect('/');
     }
 } catch (PDOException $ex) {
     setErrorMessage("Erro ao logar: " . $ex->getMessage());

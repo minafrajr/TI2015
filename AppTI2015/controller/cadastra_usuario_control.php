@@ -2,34 +2,23 @@
 
 try {
 	if (!empty($_POST)) {
-        $nome = $_POST['nome'];
-        $dataNascimento = $_POST['dataNascimento'];
-        $senha = $_POST['senha'];
-        $email = $_POST['email'];
+        $nome = getParam('nome');
+        $dataNascimento = getParam('dataNascimento');
+        $senha = getParam('senha');
+        $email = getParam('email');
 
-        $query = "SELECT CodUsu FROM usuario WHERE EmaUsu = :EmaUsu;";
-
-        /** @var $stmt PDOStatement */
-        $stmt = $conn->prepare($query);
-        $result = $stmt->execute([':EmaUsu' => $email]);
-        $all = $stmt->fetchAll();
-
-        if (!empty($all)) {
+        if (Usuario::checkIfEmailExists($email)) {
             throw new Exception("Usuário com e-mail {$email} já existe!");
         }
 
-		$query = "INSERT INTO usuario (NomUsu, DatNasUsu, SenUsu, EmaUsu)
-				  VALUES(:NomUsu, :DatNasUsu, MD5(:SenUsu), :EmaUsu);";
+        $usuario = new Usuario();
 
-		$query_params = [
-            ':NomUsu'    => $nome,
-            ':DatNasUsu' => $dataNascimento,
-            ':SenUsu'    => $senha,
-            ':EmaUsu'    => $email
-		];
-
-		$stmt = $conn->prepare($query);
-		$result = $stmt->execute($query_params);
+        $usuario
+            ->setNomUsu($nome)
+            ->setDatNasUsu($dataNascimento)
+            ->setSenUsu(md5($senha))
+            ->setEmaUsu($email)
+            ->save();
 
         setSuccessMessage('Usuário salvo com sucesso!');
 
