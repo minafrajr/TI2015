@@ -1,6 +1,4 @@
-<?php $tela = 'Novo Usuario' ?>
 <?php require_once 'header.php' ?>
-
     <form id="frm1" method="post" action="" onsubmit="return validaFormCadastroUsuario()" enctype="multipart/form-data">
         <table id="usuario" cellspacing="10">
             <tr>
@@ -36,12 +34,6 @@
                 <td>
                     <input required pattern=".{6,}" type="password" id="conf_senha" name="conf_senha">
                     <em>*</em>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="avatarToUpload">Escolher Avatar:</label></td>
-                <td>
-                    <input type="file" name="avatarToUpload" id="avatarToUpload">
                 </td>
             </tr>
             <tr>

@@ -1,4 +1,3 @@
-<?php $tela = 'Nova Tarefa' ?>
 <?php require_once 'header.php' ?>
     <form id="frm_new_tarefa" method="post" action="" onsubmit="return validaFormCadastroTarefa()">
         <div class="linha">

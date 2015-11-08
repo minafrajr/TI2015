@@ -1,9 +1,9 @@
-<?php require_once '../data/start.php'; ?>
+<?php require_once '../Data/init.php'; ?>
     <!DOCTYPE html>
     <html>
 
     <head>
-        <title>AlertSistem - <?= $tela ?: 'Bem vindo' ?></title>
+        <title>AlertSistem - <?= $controller->getTela() ?: 'Bem vindo' ?></title>
         <meta charset="UTF-8">
         <meta name="description" content="Tela de login">
         <meta name="keywords" content="">
@@ -17,8 +17,7 @@
             <div class="titulo">
                 <span class="icone-menu">...</span>
                 <h1>
-                    <?= $tela ?: 'AlertSistem' ?>
-                    <!--<button onclick="window.location.href = 'Cadastro_Nova_tarefa.html'" title="Nova tarefa">+</button>-->
+                    <?= $controller->getTela() ?: 'AlertSistem' ?>
                 </h1>
             </div>
             <?php require_once 'messages.php' ?>

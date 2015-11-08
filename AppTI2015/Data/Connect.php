@@ -1,5 +1,7 @@
 <?php
 
+namespace Data;
+
 class Connect
 {
     //private $username = "root"; //usuário do banco
@@ -13,7 +15,7 @@ class Connect
     private $dbname = "tp_tarefas"; //nome do database
 
     /**
-     * @var PDO connection
+     * @var \PDO connection
      */
     private $connection;
 
@@ -25,7 +27,7 @@ class Connect
     private function __construct()
     {
         //cria a conexão com o banco
-        $this->connection = new PDO(
+        $this->connection = new \PDO(
             "mysql:host={$this->host};dbname={$this->dbname};charset=utf8",
             $this->username,
             $this->password
@@ -35,11 +37,11 @@ class Connect
         $this->connection->exec("set names utf8");
 
         //configura o PDO para lançar a exception
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
         //configura o PDO para retornar do banco um array com índices de string.
         //Assim a string representa o nome da coluna
-        $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     }
 
     /**
@@ -55,7 +57,7 @@ class Connect
     }
 
     /**
-     * @return PDO
+     * @return \PDO
      */
     public function getConnection()
     {

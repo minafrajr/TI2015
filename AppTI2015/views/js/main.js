@@ -6,11 +6,18 @@ $(function () {
             $(this).next().toggleClass('hide');
         })
         .on('click', '.finalizar', function() {
-            if ($(this).is(':checked')) {
-                var importancia = $(this).closest('.tarefa').find('.importancia-tarefa').text() | 0;
-                alert('Parabéns!\nVocê Ganhou ' + (importancia * 10) + ' pontos!');
-                $(this).closest('.tarefa').remove();
-            }
+            var importancia = $(this).closest('.tarefa').find('.importancia-tarefa').text() | 0,
+                $form = $(this).closest('.concluir-tarefa');
+            alert('Parabéns!\nVocê Ganhou ' + (importancia * 10) + ' pontos!');
+
+            $form.find('.acao').val('finalizar');
+            $form.submit();
+        })
+        .on('click', '.salvar', function() {
+            var $form = $(this).closest('.concluir-tarefa');
+
+            $form.find('.acao').val('salvar');
+            $form.submit();
         })
     ;
 
@@ -100,30 +107,6 @@ function validaFormCadastroTarefa() {
     return true;
 }
 
-function duracao(a, b)
-{
-    var $a = $(a).find('.duracao').val(),
-        $b = $(b).find('.duracao').val();
-
-    console.log('duracao', $a, $b);
-
-    if ($a < $b) return -1;
-    else if ($a > $b) return 1;
-    return 0;
-}
-
-function data(a, b)
-{
-    var $a = new Date($(a).find('.data').val()),
-        $b = new Date($(b).find('.data').val());
-
-    console.log('data', $a, $b);
-
-    if ($a < $b) return -1;
-    else if ($a > $b) return 1;
-    return 0;
-}
-
 // Código retirado do site https://css-tricks.com/value-bubbles-for-range-inputs/
 function modifyOffset() {
     var el, newPoint, newPlace, offset, siblings, k;
@@ -164,23 +147,3 @@ function modifyInputs() {
         }
     }
 }
-
-
-
-
-
-jQuery.fn.sortDomElements = (function() {
-    return function(comparator) {
-        return $.each(Array.prototype.sort.call(this, comparator), function(i) {
-            this.parentNode.appendChild(this);
-        });
-    };
-})();
-
-$("#sortPlease").children().sortDomElements(function(a,b){
-    akey = $(a).attr("sortkey");
-    bkey = $(b).attr("sortkey");
-    if (akey == bkey) return 0;
-    if (akey < bkey) return -1;
-    if (akey > bkey) return 1;
-})

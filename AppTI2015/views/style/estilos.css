@@ -156,3 +156,7 @@ output {
 	bottom: 75%;
 	left: 0;
 }
+
+.center {
+	text-align: center;
+}

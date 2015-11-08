@@ -1,6 +1,4 @@
-<?php $tela = 'Login' ?>
 <?php require_once 'header.php' ?>
-<?php require_once '../controller/login_control.php' ?>
 
 <form method="post" action="">
     <table id="tarefas" cellspacing="10">
@@ -28,6 +26,6 @@
 </form>
 <br />
 
-<div><a href="cadastra_usuario.php">Cadastre-se</a></div>
+<div><a href="usuario_cadastrar.php">Cadastre-se</a></div>
 
 <?php require_once 'footer.php' ?>

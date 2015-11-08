@@ -1,10 +1,17 @@
 <?php
 
+namespace Model;
+
+use Data\Connect;
+
 /**
  * Class Tarefa
  */
-class Tarefa
+class Tarefa extends Entity
 {
+    const FINALIZADA = 'S';
+    const ABERTA = 'N';
+
     private $CodTar;
     private $CodUsu_Tar;
     private $NomTar;
@@ -195,7 +202,7 @@ class Tarefa
         return $this;
     }
 
-    public static function get($id)
+    public function get($id)
     {
         $query = "SELECT
                     CodTar,
@@ -210,18 +217,18 @@ class Tarefa
 				  FROM tarefa
 				  WHERE CodTar = :id";
 
-        $conn = Connect::getinstance()->getConnection();
+        $conn = $this->getConnection();
         $stmt = $conn->prepare($query);
         $stmt->execute([':id' => $id]);
         $result = $stmt->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("Tarefa com ID {$id} não foi encontrada");
+            throw new \Exception("Tarefa com ID {$id} não foi encontrada");
         }
 
         $result = $result[0];
 
-        return (new Tarefa())
+        return $this
             ->setCodTar($result['CodTar'])
             ->setCodUsuTar($result['CodUsu_Tar'])
             ->setNomTar($result['NomTar'])
@@ -246,26 +253,29 @@ class Tarefa
             ':ConTar'     => $this->ConTar,
         ];
 
-        if (empty($this->CodUsu)) {
-            $query = "INSERT INTO usuario (NomUsu, DatNasUsu, SenUsu, EmaUsu, AvaUsu)
-				  VALUES(:NomUsu, :DatNasUsu, :SenUsu, :EmaUsu, :AvaUsu);";
+        if (empty($this->CodTar)) {
+            $query = "INSERT INTO tarefa (CodUsu_Tar, NomTar, DesTar, DatIniTar, DatTerTar, TepTar, PonTar, ConTar)
+				  VALUES(:CodUsu_Tar, :NomTar, :DesTar, :DatIniTar, :DatTerTar, :TepTar, :PonTar, :ConTar);";
         } else {
-            $query = "UPDATE usuario SET
-                    NomUsu    = :NomUsu,
-                    DatNasUsu = :DatNasUsu,
-                    SenUsu    = :SenUsu,
-                    EmaUsu    = :EmaUsu,
-                    AvaUsu    = :AvaUsu
-                    WHERE CodUsu = :CodUsu;";
+            $query = "UPDATE tarefa SET
+                    CodUsu_Tar = :CodUsu_Tar,
+                    NomTar = :NomTar,
+                    DesTar = :DesTar,
+                    DatIniTar = :DatIniTar,
+                    DatTerTar = :DatTerTar,
+                    TepTar = :TepTar,
+                    PonTar = :PonTar,
+                    ConTar = :ConTar
+                    WHERE CodTar = :CodTar;";
 
             $params[':CodTar'] = $this->CodTar;
         }
 
-        $stmt = Connect::getInstance()->getConnection()->prepare($query);
+        $stmt = $this->getConnection()->prepare($query);
         $result = $stmt->execute($params);
 
         if (!$result) {
-            throw new Exception('Erro ao salvar o usuário');
+            throw new \Exception('Erro ao salvar o usuário');
         }
 
         return $this;

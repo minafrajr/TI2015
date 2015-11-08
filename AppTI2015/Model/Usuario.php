@@ -1,9 +1,13 @@
 <?php
 
+namespace Model;
+
+use Data\Connect;
+
 /**
  * Class Usuario
  */
-class Usuario
+class Usuario extends Entity
 {
     private $CodUsu;
     private $NomUsu;
@@ -132,24 +136,24 @@ class Usuario
         return $this;
     }
 
-    public static function get($id)
+    public function get($id)
     {
         $query = "SELECT CodUsu, NomUsu, DatNasUsu, SenUsu, EmaUsu, AvaUsu
 				  FROM usuario
 				  WHERE CodUsu = :id";
 
-        $conn = Connect::getinstance()->getConnection();
+        $conn = $this->getConnection();
         $stmt = $conn->prepare($query);
         $stmt->execute([':id' => $id]);
         $result = $stmt->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("Usuário com ID {$id} não foi encontrado");
+            throw new \Exception("Usuário com ID {$id} não foi encontrado");
         }
 
         $result = $result[0];
 
-        return (new Usuario())
+        return $this
             ->setCodUsu($result['CodUsu'])
             ->setNomUsu($result['Nomusu'])
             ->setDatNasUsu($result['DatNasUsu'])
@@ -183,17 +187,17 @@ class Usuario
             $params[':CodUsu'] = $this->CodUsu;
         }
 
-        $stmt = Connect::getInstance()->getConnection()->prepare($query);
+        $stmt = $this->getConnection()->prepare($query);
         $result = $stmt->execute($params);
 
         if (!$result) {
-            throw new Exception('Erro ao salvar o usuário');
+            throw new \Exception('Erro ao salvar o usuário');
         }
 
         return $this;
     }
 
-    public static function getByEmailAndPassword($email, $password)
+    public function getByEmailAndPassword($email, $password)
     {
         $query = "SELECT CodUsu
 				  FROM usuario
@@ -203,19 +207,19 @@ class Usuario
         $query_params = [':senhaUsu' => $password, ':emailUsu' => $email];
 
         //executa a consulta no banco
-        $conn = Connect::getinstance()->getConnection();
+        $conn = $this->getConnection();
         $stmt = $conn->prepare($query);
         $stmt->execute($query_params);
         $result = $stmt->fetchAll();
 
         if (empty($result)) {
-            throw new Exception("Usuário e senha inválidos");
+            throw new \Exception("Usuário e senha inválidos");
         }
 
-        return Usuario::get($result[0]['CodUsu']);
+        return $this->get($result[0]['CodUsu']);
     }
 
-    public static function checkIfEmailExists($email)
+    public function checkIfEmailExists($email)
     {
         $query = "SELECT CodUsu
 				  FROM usuario
@@ -225,7 +229,7 @@ class Usuario
         $query_params = [':emailUsu' => $email];
 
         //executa a consulta no banco
-        $stmt = Connect::getInstance()->getConnection()->prepare($query);
+        $stmt = $this->getConnection()->prepare($query);
         $stmt->execute($query_params);
         $result = $stmt->fetchAll();
 
