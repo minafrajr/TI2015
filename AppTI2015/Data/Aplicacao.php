@@ -4,45 +4,45 @@ namespace Data;
 
 use Controller\Controller;
 
-class Start
+class Aplicacao
 {
     /**
      * @var Controller controller
      */
     private $controller;
 
-    public function init()
+    public function iniciar()
     {
         // Pega o nome puro da View
-        $fileName = str_replace('.php', '', str_replace('/', '', $_SERVER['SCRIPT_NAME']));
+        $nomeArquivo = str_replace('.php', '', str_replace('/', '', $_SERVER['SCRIPT_NAME']));
         // Parte o nome em duas partes
-        $fileNameExplode = explode('_', $fileName, 2);
+        $nomeArquivoExplode = explode('_', $nomeArquivo, 2);
         // Coloca as partes em controllerName e actionName
-        $controllerName = $fileNameExplode[0];
-        $actionName = isset($fileNameExplode[1]) ? $fileNameExplode[1] : '';
+        $nomeController = $nomeArquivoExplode[0];
+        $nomeAcao = isset($nomeArquivoExplode[1]) ? $nomeArquivoExplode[1] : '';
         // Controller sempre tem a palavra Controller no fim do arquivo.
-        $controllerName = "\\Controller\\" . ucfirst($controllerName) . 'Controller';
+        $nomeController = "\\Controller\\" . ucfirst($nomeController) . 'Controller';
         // Converte o nome da ação de nome_da_ação para nomeDaAção
-        $actionName = Util::convertToCamelCase($actionName, true);
+        $nomeAcao = Util::converterParaCamelCase($nomeAcao, true);
 
         // Se o arquivo do Controller não existe, dá erro e sai
-        if (!class_exists($controllerName)) {
-            die("Controller $controllerName não encontrado!");
+        if (!class_exists($nomeController)) {
+            die("Controller $nomeController não encontrado!");
         }
 
         // Instancia o objeto do Controller
         /** @var Controller $controller */
-        $controller = new $controllerName();
+        $controller = new $nomeController();
 
         $this->controller = $controller;
 
         // Se não tem nome de action. define como index
-        if (empty($actionName)) {
-            $actionName = 'index';
+        if (empty($nomeAcao)) {
+            $nomeAcao = 'index';
         }
 
         // Chama a ação, e se não existir da erro e sai
-        return $controller->{$actionName}();
+        return $controller->{$nomeAcao}();
     }
 
     /**
@@ -56,7 +56,7 @@ class Start
     /**
      * @param Controller $controller
      *
-     * @return Start
+     * @return Aplicacao
      */
     public function setController(Controller $controller)
     {

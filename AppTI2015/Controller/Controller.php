@@ -21,7 +21,7 @@ abstract class Controller
 
     public function __construct()
     {
-        $this->init();
+        $this->iniciar();
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class Controller
         return $this;
     }
 
-    public function init()
+    public function iniciar()
     {
         // Não faz nada, tem que sobrescrever
     }
@@ -54,7 +54,7 @@ abstract class Controller
         // Não faz nada, tem que sobrescrever
     }
 
-    public function getRequest()
+    public function getRequisicao()
     {
         if ($this->isPost()) {
             return $_POST;
@@ -68,40 +68,40 @@ abstract class Controller
         return !empty($_POST);
     }
 
-    public function getParam($name, $default = null)
+    public function getParametro($name, $default = null)
     {
-        $request = $this->getRequest();
+        $request = $this->getRequisicao();
         return isset($request[$name]) ? $request[$name] : $default;
     }
 
-    public function redirect($url)
+    public function redirecionar($url)
     {
         header("Location: {$url}", true, 302);
         exit;
     }
 
-    public function getErrorMessage()
+    public function getMensagemErro()
     {
-        $errorMessage = isset($_SESSION['errorMessage']) ? $_SESSION['errorMessage'] : null;
-        unset($_SESSION['errorMessage']);
-        return $errorMessage;
+        $mensagem = isset($_SESSION['mensagemErro']) ? $_SESSION['mensagemErro'] : null;
+        unset($_SESSION['mensagemErro']);
+        return $mensagem;
     }
 
-    public function setErrorMessage($errorMessage)
+    public function setMensagemErro($mensagem)
     {
-        $_SESSION['errorMessage'] = $errorMessage;
+        $_SESSION['mensagemErro'] = $mensagem;
     }
 
-    public function getSuccessMessage()
+    public function getMensagemSucesso()
     {
-        $successMessage = isset($_SESSION['successMessage']) ? $_SESSION['successMessage'] : null;
-        unset($_SESSION['successMessage']);
-        return $successMessage;
+        $mensagem = isset($_SESSION['mensagemSucesso']) ? $_SESSION['mensagemSucesso'] : null;
+        unset($_SESSION['mensagemSucesso']);
+        return $mensagem;
     }
 
-    public function setSuccessMessage($successMessage)
+    public function setMensagemSucesso($mensagem)
     {
-        $_SESSION['successMessage'] = $successMessage;
+        $_SESSION['mensagemSucesso'] = $mensagem;
     }
 
     /**

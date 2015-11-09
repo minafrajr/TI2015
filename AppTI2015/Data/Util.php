@@ -4,16 +4,16 @@ namespace Data;
 
 class Util
 {
-    public static function convertToCamelCase($string, $firstLetterLowerCase = false)
+    public static function converterParaCamelCase($string, $primeiraLetraMinuscula = false)
     {
-        $words = array_map(function($word) {
-            return ucfirst(strtolower($word));
+        $palavras = array_map(function($palavra) {
+            return ucfirst(strtolower($palavra));
         }, explode('_', $string));
 
-        if ($firstLetterLowerCase) {
-            $words[0] = strtolower($words[0]);
+        if ($primeiraLetraMinuscula) {
+            $palavras[0] = strtolower($palavras[0]);
         }
 
-        return implode('', $words);
+        return implode('', $palavras);
     }
 }

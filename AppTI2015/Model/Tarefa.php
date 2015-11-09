@@ -5,7 +5,7 @@ namespace Model;
 /**
  * Class Tarefa
  */
-class Tarefa extends Entity
+class Tarefa extends Entidade
 {
     const FINALIZADA = 'S';
     const ABERTA = 'N';
@@ -200,7 +200,7 @@ class Tarefa extends Entity
         return $this;
     }
 
-    public function get($id)
+    public function getTarefa($id)
     {
         $query = "SELECT
                     CodTar,
@@ -215,10 +215,8 @@ class Tarefa extends Entity
 				  FROM tarefa
 				  WHERE CodTar = :id";
 
-        $conn = $this->getConnection();
-        $stmt = $conn->prepare($query);
-        $stmt->execute([':id' => $id]);
-        $result = $stmt->fetchAll();
+        $conn = $this->getConexao();
+        $result = $conn->recuperarTudo($query, [':id' => $id]);
 
         if (empty($result)) {
             throw new \Exception("Tarefa com ID {$id} não foi encontrada");
@@ -238,7 +236,7 @@ class Tarefa extends Entity
             ->setConTar($result['ConTar']);
     }
 
-    public function save()
+    public function salvar()
     {
         $params = [
             ':CodUsu_Tar' => $this->CodUsu_Tar,
@@ -269,17 +267,16 @@ class Tarefa extends Entity
             $params[':CodTar'] = $this->CodTar;
         }
 
-        $stmt = $this->getConnection()->prepare($query);
-        $result = $stmt->execute($params);
+        $result = $this->getConexao()->salvar($query, $params);
 
         if (!$result) {
-            throw new \Exception('Erro ao salvar o usuário');
+            throw new \Exception('Erro ao salvar a tarefa');
         }
 
         return $this;
     }
 
-    public function getReportByUser($CodUsu, $groupBy)
+    public function getRelatorioPeloUsuario($CodUsu, $groupBy)
     {
         $sql = "SELECT
                   YEAR(DatIniTar) AS ano,
@@ -299,18 +296,15 @@ class Tarefa extends Entity
             $sql .= ", WEEK(DatIniTar)";
         }
 
-        $conn = $this->getConnection();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([':CodUsu_Tar' => $CodUsu]);
+        $conn = $this->getConexao();
 
-        return $stmt->fetchAll();
+        return $conn->recuperarTudo($sql, [':CodUsu_Tar' => $CodUsu]);
     }
 
-    public function delete()
+    public function excluir()
     {
         $sql = "DELETE FROM tarefa WHERE CodTar = :Codtar";
-        $conn = $this->getConnection();
-        $stmt = $conn->prepare($sql);
-        return $stmt->execute([':Codtar' => $this->getCodTar()]);
+        $conn = $this->getConexao();
+        return $conn->salvar($sql, [':Codtar' => $this->getCodTar()]);
     }
 }

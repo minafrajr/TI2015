@@ -2,22 +2,22 @@
 
 namespace Controller;
 
-use Data\Connect;
+use Data\Conexao;
 use Model\Tarefa;
 use Model\Usuario;
 
 class TarefaController extends Controller
 {
-    public function init()
+    public function iniciar()
     {
         // Se o usuário não está logado, redireciona para a tela de login
         if (empty($_SESSION['usuario'])) {
-            $this->redirect('/login.php');
+            $this->redirecionar('/login.php');
         }
 
         $usuario = new Usuario();
-        $usuario->setConnection(Connect::getinstance()->getConnection());
-        $usuario->get($_SESSION['usuario']['codigo']);
+        $usuario->setConexao(Conexao::getInstancia()->getConexao());
+        $usuario->getUsuario($_SESSION['usuario']['codigo']);
         $this->setUsuario($usuario);
     }
 
@@ -43,24 +43,23 @@ class TarefaController extends Controller
 
                 $query_params = [
                     ':CodUsu_Tar' => $codUsu,
-                    ':NomTar'     => $this->getParam('nome'),
-                    ':DesTar'     => $this->getParam("descricao"),
-                    ':DatIniTar'  => $this->getParam("data"),
-                    ':TepTar'     => $this->getParam("duracao"),
-                    ':PonTar'     => $this->getParam("prioridade")
+                    ':NomTar'     => $this->getParametro('nome'),
+                    ':DesTar'     => $this->getParametro("descricao"),
+                    ':DatIniTar'  => $this->getParametro("data"),
+                    ':TepTar'     => $this->getParametro("duracao"),
+                    ':PonTar'     => $this->getParametro("prioridade")
                 ];
 
-                $conn = Connect::getinstance()->getConnection();
-                $stmt = $conn->prepare($query);
-                $result = $stmt->execute($query_params);
+                $conn = Conexao::getInstancia()->getConexao();
+                $result = $conn->salvar($query, $query_params);
 
                 if ($result) {
-                    $this->setSuccessMessage('Tarefa adicionada com sucesso!');
-                    $this->redirect('/index.php');
+                    $this->setMensagemSucesso('Tarefa adicionada com sucesso!');
+                    $this->redirecionar('/index.php');
                 }
             }
         } catch (\PDOException $ex) {
-            $this->setErrorMessage($ex->getMessage());
+            $this->setMensagemErro($ex->getMessage());
         }
     }
 
@@ -69,9 +68,9 @@ class TarefaController extends Controller
         $this->setTela('Tarefas concluídas');
         $codUsuario = $_SESSION['usuario']['codigo'];
 
-        $duracao = (int)$this->getParam('duracao', 0);
-        $data = $this->getParam('data');
-        $ordenar = $this->getParam('ordenar', 'PonTar');
+        $duracao = (int)$this->getParametro('duracao', 0);
+        $data = $this->getParametro('data');
+        $ordenar = $this->getParametro('ordenar', 'PonTar');
 
         $ordenacorsPossiveis = ['DatIniTar', 'TepTar', 'PonTar', 'NomTar'];
 
@@ -106,10 +105,8 @@ class TarefaController extends Controller
                 $where
                 ORDER BY $ordenar ASC";
 
-        $conn = Connect::getinstance()->getConnection();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($params);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $conn = Conexao::getInstancia()->getConexao();
+        $result = $conn->recuperarTudo($sql, $params);
 
         return [
             'duracao' => $duracao,
@@ -125,10 +122,10 @@ class TarefaController extends Controller
             try {
                 // Recupera a tarefa
                 $tarefa = new Tarefa();
-                $tarefa->setConnection(Connect::getinstance()->getConnection());
-                $tarefa->get($this->getParam('CodTar'));
+                $tarefa->setConexao(Conexao::getInstancia()->getConexao());
+                $tarefa->getTarefa($this->getParametro('CodTar'));
 
-                switch ($this->getParam('acao')) {
+                switch ($this->getParametro('acao')) {
                     case 'salvar':
                     case 'finalizar':
                         $this->salvar($tarefa);
@@ -139,25 +136,25 @@ class TarefaController extends Controller
                         break;
                 }
             } catch (\Exception $e) {
-                $this->setErrorMessage('Erro ao alterar a tarefa: ' . $e->getMessage());
+                $this->setMensagemErro('Erro ao alterar a tarefa: ' . $e->getMessage());
             }
         }
 
-        $this->redirect('/');
+        $this->redirecionar('/');
     }
 
     private function salvar(Tarefa $tarefa)
     {
-        $finalizar = $this->getParam('acao') === 'finalizar';
+        $finalizar = $this->getParametro('acao') === 'finalizar';
 
         // Cria um objeto de DateTime com a data do form
-        $dataInicio = \DateTime::createFromFormat('Y-m-d\TH:i', $this->getParam('data'));
+        $dataInicio = \DateTime::createFromFormat('Y-m-d\TH:i', $this->getParametro('data'));
         // Clona a data inicial para calcular a data final
         $dataFim = clone $dataInicio;
         // Pega a duração
-        $duracao = $this->getParam('duracao');
+        $duracao = $this->getParametro('duracao');
         // Quebra pelo ':' e coloca os valores em $hora e $min
-        list($hora, $min) = explode(':', $this->getParam('duracao'));
+        list($hora, $min) = explode(':', $this->getParametro('duracao'));
         // Converte os valores em int
         $hora = (int)$hora;
         $min = (int)$min;
@@ -172,7 +169,7 @@ class TarefaController extends Controller
             ->setDatIniTar($dataInicio->format('Y-m-d H:i:s'))
             ->setDatTerTar($dataFim->format('Y-m-d H:i:s'))
             ->setTepTar($duracao)
-            ->setDesTar($this->getParam('descricao'));
+            ->setDesTar($this->getParametro('descricao'));
 
         // Se a ação é de finalizar a tarefa, marca ela como finalizada
         if ($finalizar) {
@@ -180,15 +177,15 @@ class TarefaController extends Controller
         }
 
         // Salva a tarefa
-        $tarefa->save();
+        $tarefa->salvar();
 
-        $this->setSuccessMessage('Tarefa ' . ($finalizar ? 'finalizada' : 'salva') . ' com sucesso!');
+        $this->setMensagemSucesso('Tarefa ' . ($finalizar ? 'finalizada' : 'salva') . ' com sucesso!');
     }
 
     private function excluir(Tarefa $tarefa)
     {
-        $tarefa->delete();
+        $tarefa->excluir();
 
-        $this->setSuccessMessage('Tarefa excluída com sucesso!');
+        $this->setMensagemSucesso('Tarefa excluída com sucesso!');
     }
 }

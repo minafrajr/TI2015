@@ -12,8 +12,8 @@ require_once('../../vendor/autoload.php');
 header('Content-Type: text/html; charset=utf-8');
 
 // Inicia a aplicação
-$start = new Data\Start();
+$start = new Data\Aplicacao();
 // Cria a variável com o parâmetros da View
-$view = $start->init();
+$view = $start->iniciar();
 // Cria a variável com o objeto do controller corrente
 $controller = $start->getController();

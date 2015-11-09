@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-use Data\Connect;
+use Data\Conexao;
 use Model\Usuario;
 
 class LoginController extends Controller
@@ -15,8 +15,8 @@ class LoginController extends Controller
             if ($this->isPost()) {
                 //consulta
                 $usuario = new Usuario();
-                $usuario->setConnection(Connect::getinstance()->getConnection());
-                $usuario->getByEmailAndPassword($this->getParam('email'), $this->getParam('senha'));
+                $usuario->setConexao(Conexao::getInstancia()->getConexao());
+                $usuario->getPeloEmailESenha($this->getParametro('email'), $this->getParametro('senha'));
 
                 // Define o usuário da sessão
                 $_SESSION['usuario'] = [
@@ -26,13 +26,13 @@ class LoginController extends Controller
                 ];
 
                 //encaminha para a página inicial.
-                $this->setSuccessMessage('Bem vindo ao sistema, ' . $usuario->getNomUsu());
-                $this->redirect('/');
+                $this->setMensagemSucesso('Bem vindo ao sistema, ' . $usuario->getNomUsu());
+                $this->redirecionar('/');
             }
         } catch (\PDOException $ex) {
-            $this->setErrorMessage("Erro ao logar: " . $ex->getMessage());
+            $this->setMensagemErro("Erro ao logar: " . $ex->getMessage());
         } catch (\Exception $ex) {
-            $this->setErrorMessage($ex->getMessage());
+            $this->setMensagemErro($ex->getMessage());
         }
     }
 
@@ -40,6 +40,6 @@ class LoginController extends Controller
     {
         $_SESSION = [];
         session_destroy();
-        $this->redirect('/login.php');
+        $this->redirecionar('/login.php');
     }
 }

@@ -2,21 +2,21 @@
 
 namespace Controller;
 
-use Data\Connect;
+use Data\Conexao;
 use Model\Usuario;
 
 class IndexController extends Controller
 {
-    public function init()
+    public function iniciar()
     {
         // Se o usuário não está logado, redireciona para a tela de login
         if (empty($_SESSION['usuario'])) {
-            $this->redirect('/login.php');
+            $this->redirecionar('/login.php');
         }
 
         $usuario = new Usuario();
-        $usuario->setConnection(Connect::getinstance()->getConnection());
-        $usuario->get($_SESSION['usuario']['codigo']);
+        $usuario->setConexao(Conexao::getInstancia()->getConexao());
+        $usuario->getUsuario($_SESSION['usuario']['codigo']);
         $this->setUsuario($usuario);
     }
 
@@ -24,13 +24,13 @@ class IndexController extends Controller
     {
         $codUsuario = $this->getUsuario()->getCodUsu();
 
-        $duracao = (int)$this->getParam('duracao', 0);
-        $data = $this->getParam('data');
-        $ordenar = $this->getParam('ordenar', 'PonTar');
+        $duracao = (int)$this->getParametro('duracao', 0);
+        $data = $this->getParametro('data');
+        $ordenar = $this->getParametro('ordenar', 'PonTar');
 
-        $ordenacorsPossiveis = ['DatIniTar', 'TepTar', 'PonTar', 'NomTar'];
+        $ordenacoesPossiveis = ['DatIniTar', 'TepTar', 'PonTar', 'NomTar'];
 
-        if (!in_array($ordenar, $ordenacorsPossiveis)) {
+        if (!in_array($ordenar, $ordenacoesPossiveis)) {
             die('Falha de segurança! SQL Injection!');
         }
 
@@ -61,10 +61,8 @@ class IndexController extends Controller
                 $where
                 ORDER BY $ordenar ASC";
 
-        $conn = Connect::getinstance()->getConnection();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($params);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $conn = Conexao::getInstancia()->getConexao();
+        $result = $conn->recuperarTudo($sql, $params);
 
         return [
             'duracao' => $duracao,

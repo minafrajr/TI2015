@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-use Data\Connect;
+use Data\Conexao;
 use Model\Usuario;
 
 class UsuarioController extends Controller
@@ -13,15 +13,15 @@ class UsuarioController extends Controller
 
         try {
             if ($this->isPost()) {
-                $nome = $this->getParam('nome');
-                $dataNascimento = $this->getParam('dataNascimento');
-                $senha = $this->getParam('senha');
-                $email = $this->getParam('email');
+                $nome = $this->getParametro('nome');
+                $dataNascimento = $this->getParametro('dataNascimento');
+                $senha = $this->getParametro('senha');
+                $email = $this->getParametro('email');
 
                 $usuario = new Usuario();
-                $usuario->setConnection(Connect::getinstance()->getConnection());
+                $usuario->setConexao(Conexao::getInstancia()->getConexao());
 
-                if ($usuario->checkIfEmailExists($email)) {
+                if ($usuario->verificaSeEmailExiste($email)) {
                     throw new \Exception("Usuário com e-mail {$email} já existe!");
                 }
 
@@ -30,16 +30,16 @@ class UsuarioController extends Controller
                     ->setDatNasUsu($dataNascimento)
                     ->setSenUsu(md5($senha))
                     ->setEmaUsu($email)
-                    ->save();
+                    ->salvar();
 
-                $this->setSuccessMessage('Usuário salvo com sucesso!');
+                $this->setMensagemSucesso('Usuário salvo com sucesso!');
 
-                $this->redirect('/');
+                $this->redirecionar('/');
             }
         } catch (\PDOException $ex) {
-            $this->setErrorMessage("Erro ao inserir no banco: " . $ex->getMessage());
+            $this->setMensagemErro("Erro ao inserir no banco: " . $ex->getMessage());
         } catch (\Exception $ex) {
-            $this->setErrorMessage("Erro ao salvar o usuário: " . $ex->getMessage());
+            $this->setMensagemErro("Erro ao salvar o usuário: " . $ex->getMessage());
         }
     }
 }

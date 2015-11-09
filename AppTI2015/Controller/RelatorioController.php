@@ -6,34 +6,34 @@
 
 namespace Controller;
 
-use Data\Connect;
+use Data\Conexao;
 use Model\Tarefa;
 use Model\Usuario;
 
 class RelatorioController extends Controller
 {
-    public function init()
+    public function iniciar()
     {
         // Se o usuário não está logado, redireciona para a tela de login
         if (empty($_SESSION['usuario'])) {
-            $this->redirect('/login.php');
+            $this->redirecionar('/login.php');
         }
 
         $usuario = new Usuario();
-        $usuario->setConnection(Connect::getinstance()->getConnection());
-        $usuario->get($_SESSION['usuario']['codigo']);
+        $usuario->setConexao(Conexao::getInstancia()->getConexao());
+        $usuario->getUsuario($_SESSION['usuario']['codigo']);
         $this->setUsuario($usuario);
     }
 
     public function index()
     {
         $this->setTela('Relatório');
-        $groupBy = $this->getParam('group', 'ano');
+        $groupBy = $this->getParametro('group', 'ano');
         $codUsuario = $this->getUsuario()->getCodUsu();
 
         $tarefa = new Tarefa();
-        $tarefa->setConnection(Connect::getinstance()->getConnection());
-        $report = $tarefa->getReportByUser($codUsuario, $groupBy);
+        $tarefa->setConexao(Conexao::getInstancia()->getConexao());
+        $report = $tarefa->getRelatorioPeloUsuario($codUsuario, $groupBy);
 
         return [
             'group' => $groupBy,

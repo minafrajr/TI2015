@@ -8,21 +8,21 @@
 namespace Controller;
 
 
-use Data\Connect;
+use Data\Conexao;
 use Model\Usuario;
 
 class PontosController extends Controller
 {
-    public function init()
+    public function iniciar()
     {
         // Se o usuário não está logado, redireciona para a tela de login
         if (empty($_SESSION['usuario'])) {
-            $this->redirect('/login.php');
+            $this->redirecionar('/login.php');
         }
 
         $usuario = new Usuario();
-        $usuario->setConnection(Connect::getinstance()->getConnection());
-        $usuario->get($_SESSION['usuario']['codigo']);
+        $usuario->setConexao(Conexao::getInstancia()->getConexao());
+        $usuario->getUsuario($_SESSION['usuario']['codigo']);
         $this->setUsuario($usuario);
     }
 
@@ -32,9 +32,7 @@ class PontosController extends Controller
         $codUsu = $this->getUsuario()->getCodUsu();
 
         $sql = "SELECT SUM(PonTar * 10) AS pontos from tarefa WHERE ConTar = 'S' AND CodUsu_Tar = :CodUsu;";
-        $stmt = Connect::getinstance()->getConnection()->prepare($sql);
-        $stmt->execute([':CodUsu' => $codUsu]);
-        $result = $stmt->fetchAll();
+        $result = Conexao::getInstancia()->getConexao()->recuperarTudo($sql, [':CodUsu' => $codUsu]);
         $pontos = empty($result) ? 0 : (int)$result[0]['pontos'];
 
         return [

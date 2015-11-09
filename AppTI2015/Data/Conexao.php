@@ -2,7 +2,7 @@
 
 namespace Data;
 
-class Connect
+class Conexao
 {
     //private $username = "root"; //usuário do banco
     //private $password = "1234"; //senha do banco
@@ -15,52 +15,54 @@ class Connect
     private $dbname = "tp_tarefas"; //nome do database
 
     /**
-     * @var \PDO connection
+     * @var Database conexao
      */
-    private $connection;
+    private $conexao;
 
     /**
-     * @var Connect instance
+     * @var Conexao instancia
      */
-    private static $instance;
+    private static $instancia;
 
     private function __construct()
     {
         //cria a conexão com o banco
-        $this->connection = new \PDO(
+        $pdo = new \PDO(
             "mysql:host={$this->host};dbname={$this->dbname};charset=utf8",
             $this->username,
             $this->password
         );
 
         //codifica para o utf8
-        $this->connection->exec("set names utf8");
+        $pdo->exec("set names utf8");
 
         //configura o PDO para lançar a exception
-        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
         //configura o PDO para retornar do banco um array com índices de string.
         //Assim a string representa o nome da coluna
-        $this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+        $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+
+        $this->conexao = new Database($pdo);
     }
 
     /**
-     * @return Connect
+     * @return Conexao
      */
-    public static function getinstance()
+    public static function getInstancia()
     {
-        if (empty(self::$instance)) {
-            self::$instance = new static();
+        if (empty(self::$instancia)) {
+            self::$instancia = new static();
         }
 
-        return self::$instance;
+        return self::$instancia;
     }
 
     /**
-     * @return \PDO
+     * @return Database
      */
-    public function getConnection()
+    public function getConexao()
     {
-        return $this->connection;
+        return $this->conexao;
     }
 }

@@ -2,12 +2,10 @@
 
 namespace Model;
 
-use Data\Connect;
-
 /**
  * Class Usuario
  */
-class Usuario extends Entity
+class Usuario extends Entidade
 {
     private $CodUsu;
     private $NomUsu;
@@ -136,16 +134,14 @@ class Usuario extends Entity
         return $this;
     }
 
-    public function get($id)
+    public function getUsuario($id)
     {
         $query = "SELECT CodUsu, NomUsu, DatNasUsu, SenUsu, EmaUsu, AvaUsu
 				  FROM usuario
 				  WHERE CodUsu = :id";
 
-        $conn = $this->getConnection();
-        $stmt = $conn->prepare($query);
-        $stmt->execute([':id' => $id]);
-        $result = $stmt->fetchAll();
+        $conn = $this->getConexao();
+        $result = $conn->recuperarTudo($query, [':id' => $id]);
 
         if (empty($result)) {
             throw new \Exception("Usuário com ID {$id} não foi encontrado");
@@ -162,7 +158,7 @@ class Usuario extends Entity
             ->setAvaUsu($result['AvaUsu']);
     }
 
-    public function save()
+    public function salvar()
     {
         $params = [
             ':NomUsu' => $this->NomUsu,
@@ -187,8 +183,7 @@ class Usuario extends Entity
             $params[':CodUsu'] = $this->CodUsu;
         }
 
-        $stmt = $this->getConnection()->prepare($query);
-        $result = $stmt->execute($params);
+        $result = $this->getConexao()->salvar($query, $params);
 
         if (!$result) {
             throw new \Exception('Erro ao salvar o usuário');
@@ -197,7 +192,7 @@ class Usuario extends Entity
         return $this;
     }
 
-    public function getByEmailAndPassword($email, $password)
+    public function getPeloEmailESenha($email, $password)
     {
         $query = "SELECT CodUsu
 				  FROM usuario
@@ -207,19 +202,17 @@ class Usuario extends Entity
         $query_params = [':senhaUsu' => $password, ':emailUsu' => $email];
 
         //executa a consulta no banco
-        $conn = $this->getConnection();
-        $stmt = $conn->prepare($query);
-        $stmt->execute($query_params);
-        $result = $stmt->fetchAll();
+        $conn = $this->getConexao();
+        $result = $conn->recuperarTudo($query, $query_params);
 
         if (empty($result)) {
             throw new \Exception("Usuário e senha inválidos");
         }
 
-        return $this->get($result[0]['CodUsu']);
+        return $this->getUsuario($result[0]['CodUsu']);
     }
 
-    public function checkIfEmailExists($email)
+    public function verificaSeEmailExiste($email)
     {
         $query = "SELECT CodUsu
 				  FROM usuario
@@ -229,9 +222,7 @@ class Usuario extends Entity
         $query_params = [':emailUsu' => $email];
 
         //executa a consulta no banco
-        $stmt = $this->getConnection()->prepare($query);
-        $stmt->execute($query_params);
-        $result = $stmt->fetchAll();
+        $result = $this->getConexao()->recuperarTudo($query, $query_params);
 
         return !empty($result);
     }
