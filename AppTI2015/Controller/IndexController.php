@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Data\Connect;
+use Model\Usuario;
 
 class IndexController extends Controller
 {
@@ -12,11 +13,16 @@ class IndexController extends Controller
         if (empty($_SESSION['usuario'])) {
             $this->redirect('/login.php');
         }
+
+        $usuario = new Usuario();
+        $usuario->setConnection(Connect::getinstance()->getConnection());
+        $usuario->get($_SESSION['usuario']['codigo']);
+        $this->setUsuario($usuario);
     }
 
     public function index()
     {
-        $codUsuario = $_SESSION['usuario']['codigo'];
+        $codUsuario = $this->getUsuario()->getCodUsu();
 
         $duracao = (int)$this->getParam('duracao', 0);
         $data = $this->getParam('data');

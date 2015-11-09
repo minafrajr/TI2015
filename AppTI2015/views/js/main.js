@@ -13,6 +13,14 @@ $(function () {
             $form.find('.acao').val('finalizar');
             $form.submit();
         })
+        .on('click', '.excluir', function() {
+            var $form = $(this).closest('.concluir-tarefa');
+
+            if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+                $form.find('.acao').val('excluir');
+                $form.submit();
+            }
+        })
         .on('click', '.salvar', function() {
             var $form = $(this).closest('.concluir-tarefa');
 
@@ -30,6 +38,14 @@ $(function () {
             $('#filtro').submit();
         })
     ;
+
+    $('#relatorio').on('change', '#group', function() {
+        $(this).closest('form').submit();
+    });
+
+    $('#cancelar').click(function() {
+        window.location.href = '/';
+    });
 
     modifyInputs();
 });

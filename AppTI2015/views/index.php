@@ -71,6 +71,7 @@
                             <div class="label">&nbsp;</div>
                             <div class="campo">
                                 <button type="button" class="finalizar">Finalizar</button>
+                                <button type="button" class="excluir">Excluir</button>
                                 <button type="button" class="salvar">Salvar</button>
                             </div>
                         </div>

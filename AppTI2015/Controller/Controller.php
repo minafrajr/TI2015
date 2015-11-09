@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Model\Usuario;
+
 /**
  * Class Controller
  */
@@ -11,6 +13,11 @@ abstract class Controller
      * @var string tela
      */
     private $tela;
+
+    /**
+     * @var Usuario usuario
+     */
+    private $usuario;
 
     public function __construct()
     {
@@ -95,5 +102,25 @@ abstract class Controller
     public function setSuccessMessage($successMessage)
     {
         $_SESSION['successMessage'] = $successMessage;
+    }
+
+    /**
+     * @return Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * @param Usuario $usuario
+     *
+     * @return Controller
+     */
+    public function setUsuario(Usuario $usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
     }
 }

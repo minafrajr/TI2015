@@ -1,17 +1,16 @@
 <?php
 /**
- * Class PontosController
+ * Class RelatorioController
  * @package Controller
  */
 
-
 namespace Controller;
 
-
 use Data\Connect;
+use Model\Tarefa;
 use Model\Usuario;
 
-class PontosController extends Controller
+class RelatorioController extends Controller
 {
     public function init()
     {
@@ -28,17 +27,17 @@ class PontosController extends Controller
 
     public function index()
     {
-        $this->setTela('Minha Pontuação');
-        $codUsu = $this->getUsuario()->getCodUsu();
+        $this->setTela('Relatório');
+        $groupBy = $this->getParam('group', 'ano');
+        $codUsuario = $this->getUsuario()->getCodUsu();
 
-        $sql = "SELECT SUM(PonTar * 10) AS pontos from tarefa WHERE ConTar = 'S' AND CodUsu_Tar = :CodUsu;";
-        $stmt = Connect::getinstance()->getConnection()->prepare($sql);
-        $stmt->execute([':CodUsu' => $codUsu]);
-        $result = $stmt->fetchAll();
-        $pontos = empty($result) ? 0 : (int)$result[0]['pontos'];
+        $tarefa = new Tarefa();
+        $tarefa->setConnection(Connect::getinstance()->getConnection());
+        $report = $tarefa->getReportByUser($codUsuario, $groupBy);
 
         return [
-            'pontos' => $pontos
+            'group' => $groupBy,
+            'relatorio' => $report
         ];
     }
 }

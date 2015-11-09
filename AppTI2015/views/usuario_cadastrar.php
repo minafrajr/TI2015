@@ -9,9 +9,9 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="email">Email:</label></td>
+                <td><label for="email">E-mail:</label></td>
                 <td>
-                    <input required type="email" id="email" name="email">
+                    <input required type="email" id="email" name="email" placeholder="Digite seu e-mail">
                     <em>*</em>
                 </td>
             </tr>
@@ -25,14 +25,14 @@
             <tr>
                 <td><label for="senha">Senha:</label></td>
                 <td>
-                    <input required pattern=".{6,}" type="password" id="senha" name="senha">
+                    <input required pattern=".{6,}" placeholder="Mínimo 6 caracteres" type="password" id="senha" name="senha">
                     <em>*</em>
                 </td>
             </tr>
             <tr>
                 <td><label for="conf_senha">Confirmar Senha:</label></td>
                 <td>
-                    <input required pattern=".{6,}" type="password" id="conf_senha" name="conf_senha">
+                    <input required pattern=".{6,}" placeholder="Mínimo 6 caracteres" type="password" id="conf_senha" name="conf_senha">
                     <em>*</em>
                 </td>
             </tr>
@@ -44,7 +44,7 @@
                     <input type="submit" name="Enviar" value="OK">
                 </td>
                 <td>
-                    <input type="reset" name="limpar" value="Cancelar">
+                    <button type="button" id="cancelar">Cancelar</button>
                 </td>
             </tr>
         </table>

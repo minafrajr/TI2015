@@ -51,7 +51,7 @@
                 <input type="submit" name="Enviar" value="OK">
             </div>
             <div class="campo">
-                <input type="reset" name="limpar" value="Cancelar">
+                <button type="button" id="cancelar">Cancelar</button>
             </div>
         </div>
     </form>

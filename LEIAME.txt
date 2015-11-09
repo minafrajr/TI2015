@@ -1,0 +1,2 @@
+Para executar o programa, use a pasta "views" como a raiz do servidor Web, pois é nela que está o index.php
+Isso impede que arquivos sensíveis, como Controllers e Models, sejam visíveis de fora.

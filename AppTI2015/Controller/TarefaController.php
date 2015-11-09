@@ -4,6 +4,7 @@ namespace Controller;
 
 use Data\Connect;
 use Model\Tarefa;
+use Model\Usuario;
 
 class TarefaController extends Controller
 {
@@ -13,12 +14,17 @@ class TarefaController extends Controller
         if (empty($_SESSION['usuario'])) {
             $this->redirect('/login.php');
         }
+
+        $usuario = new Usuario();
+        $usuario->setConnection(Connect::getinstance()->getConnection());
+        $usuario->get($_SESSION['usuario']['codigo']);
+        $this->setUsuario($usuario);
     }
 
     public function cadastrar()
     {
         $this->setTela('Nova Tarefa');
-        $codUsu = $_SESSION['usuario']['codigo'];
+        $codUsu = $this->getUsuario()->getCodUsu();
 
         try {
             if ($this->isPost()) {
@@ -116,52 +122,73 @@ class TarefaController extends Controller
     public function concluir()
     {
         if ($this->isPost()) {
-            $finalizar = $this->getParam('acao') === 'finalizar';
-
             try {
                 // Recupera a tarefa
                 $tarefa = new Tarefa();
                 $tarefa->setConnection(Connect::getinstance()->getConnection());
                 $tarefa->get($this->getParam('CodTar'));
 
-                // Cria um objeto de DateTime com a data do form
-                $dataInicio = \DateTime::createFromFormat('Y-m-d\TH:i', $this->getParam('data'));
-                // Clona a data inicial para calcular a data final
-                $dataFim = clone $dataInicio;
-                // Pega a duração
-                $duracao = $this->getParam('duracao');
-                // Quebra pelo ':' e coloca os valores em $hora e $min
-                list($hora, $min) = explode(':', $this->getParam('duracao'));
-                // Converte os valores em int
-                $hora = (int)$hora;
-                $min = (int)$min;
+                switch ($this->getParam('acao')) {
+                    case 'salvar':
+                    case 'finalizar':
+                        $this->salvar($tarefa);
+                        break;
 
-                // Cria um objeto de DateInterval para calcular a nova data de término
-                $intervalo = new \DateInterval("PT{$hora}H{$min}M");
-                // Adiciona o intervalo á data de término
-                $dataFim->add($intervalo);
-
-                // Define os campos da tarefa de acordo com o form
-                $tarefa
-                    ->setDatIniTar($dataInicio->format('Y-m-d H:i:s'))
-                    ->setDatTerTar($dataFim->format('Y-m-d H:i:s'))
-                    ->setTepTar($duracao)
-                    ->setDesTar($this->getParam('descricao'));
-
-                // Se a ação é de finalizar a tarefa, marca ela como finalizada
-                if ($finalizar) {
-                    $tarefa->setConTar(Tarefa::FINALIZADA);
+                    case 'excluir':
+                        $this->excluir($tarefa);
+                        break;
                 }
-
-                // Salva a tarefa
-                $tarefa->save();
-
-                $this->setSuccessMessage('Tarefa ' . ($finalizar ? 'finalizada' : 'salva') . ' com sucesso!');
             } catch (\Exception $e) {
-                $this->setErrorMessage('Erro ao ' . ($finalizar ? 'finalizar' : 'salvar') . ' a tarefa: ' . $e->getMessage());
+                $this->setErrorMessage('Erro ao alterar a tarefa: ' . $e->getMessage());
             }
         }
 
         $this->redirect('/');
+    }
+
+    private function salvar(Tarefa $tarefa)
+    {
+        $finalizar = $this->getParam('acao') === 'finalizar';
+
+        // Cria um objeto de DateTime com a data do form
+        $dataInicio = \DateTime::createFromFormat('Y-m-d\TH:i', $this->getParam('data'));
+        // Clona a data inicial para calcular a data final
+        $dataFim = clone $dataInicio;
+        // Pega a duração
+        $duracao = $this->getParam('duracao');
+        // Quebra pelo ':' e coloca os valores em $hora e $min
+        list($hora, $min) = explode(':', $this->getParam('duracao'));
+        // Converte os valores em int
+        $hora = (int)$hora;
+        $min = (int)$min;
+
+        // Cria um objeto de DateInterval para calcular a nova data de término
+        $intervalo = new \DateInterval("PT{$hora}H{$min}M");
+        // Adiciona o intervalo á data de término
+        $dataFim->add($intervalo);
+
+        // Define os campos da tarefa de acordo com o form
+        $tarefa
+            ->setDatIniTar($dataInicio->format('Y-m-d H:i:s'))
+            ->setDatTerTar($dataFim->format('Y-m-d H:i:s'))
+            ->setTepTar($duracao)
+            ->setDesTar($this->getParam('descricao'));
+
+        // Se a ação é de finalizar a tarefa, marca ela como finalizada
+        if ($finalizar) {
+            $tarefa->setConTar(Tarefa::FINALIZADA);
+        }
+
+        // Salva a tarefa
+        $tarefa->save();
+
+        $this->setSuccessMessage('Tarefa ' . ($finalizar ? 'finalizada' : 'salva') . ' com sucesso!');
+    }
+
+    private function excluir(Tarefa $tarefa)
+    {
+        $tarefa->delete();
+
+        $this->setSuccessMessage('Tarefa excluída com sucesso!');
     }
 }

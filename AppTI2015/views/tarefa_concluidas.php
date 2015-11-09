@@ -3,7 +3,8 @@
         <div class="linha">
             <div class="label"><label for="duracao">Duração até:</label></div>
             <div class="campo">
-                <input type="range" name="duracao" id="duracao" min="0" max="23" step="1" value="<?= $view['duracao'] ?>" />
+                <input type="range" name="duracao" id="duracao" min="0" max="23" step="1"
+                       value="<?= $view['duracao'] ?>" />
                 <output for="duracao"></output>
             </div>
             <div class="clear"></div>
@@ -32,18 +33,17 @@
 <?php else: ?>
     <div id="tarefas">
         <?php foreach ($view['result'] as $tarefa): ?>
-            <div class="tarefa">
-                <div class="nome">
-                    <div class="descricao-tarefa"><?= $tarefa['NomTar'] ?></div>
-                    <div class="importancia-tarefa"><?= $tarefa['PonTar'] ?></div>
-                </div>
-                <div class="detalhe hide">
-                    <form>
+            <form action="/tarefa_concluir.php" class="concluir-tarefa" method="post">
+                <div class="tarefa">
+                    <div class="nome">
+                        <div class="descricao-tarefa"><?= $tarefa['NomTar'] ?></div>
+                        <div class="importancia-tarefa"><?= $tarefa['PonTar'] ?></div>
+                    </div>
+                    <div class="detalhe hide">
                         <div class="linha">
                             <div class="label">Data:</div>
                             <div class="campo"><?= $tarefa['DatIniTar'] ?></div>
                         </div>
-
                         <div class="linha">
                             <div class="label">Duração:</div>
                             <div class="campo"><?= $tarefa['TepTar'] ?></div>
@@ -52,9 +52,17 @@
                             <div class="label">Descrição:</div>
                             <div class="campo"><?= $tarefa['DesTar'] ?>&nbsp;</div>
                         </div>
-                    </form>
+                        <div class="linha">
+                            <div>&nbsp;</div>
+                            <div>
+                                <button type="button" class="excluir">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="acao" class="acao" />
+                    <input type="hidden" name="CodTar" value="<?= $tarefa['CodTar'] ?>" />
                 </div>
-            </div>
+            </form>
         <?php endforeach ?>
     </div>
 <?php endif ?>

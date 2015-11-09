@@ -15,7 +15,9 @@
         <?php require_once 'menu.php' ?>
         <div class="container">
             <div class="titulo">
-                <span class="icone-menu">...</span>
+                <?php if ($controller->getUsuario() !== null): ?>
+                    <span class="icone-menu">...</span>
+                <?php endif ?>
                 <h1>
                     <?= $controller->getTela() ?: 'AlertSistem' ?>
                 </h1>

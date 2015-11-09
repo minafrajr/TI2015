@@ -155,7 +155,7 @@ class Usuario extends Entity
 
         return $this
             ->setCodUsu($result['CodUsu'])
-            ->setNomUsu($result['Nomusu'])
+            ->setNomUsu($result['NomUsu'])
             ->setDatNasUsu($result['DatNasUsu'])
             ->setSenUsu($result['SenUsu'])
             ->setEmaUsu($result['EmaUsu'])

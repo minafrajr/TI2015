@@ -2,8 +2,6 @@
 
 namespace Model;
 
-use Data\Connect;
-
 /**
  * Class Tarefa
  */
@@ -279,5 +277,40 @@ class Tarefa extends Entity
         }
 
         return $this;
+    }
+
+    public function getReportByUser($CodUsu, $groupBy)
+    {
+        $sql = "SELECT
+                  YEAR(DatIniTar) AS ano,
+                  MONTH(DatIniTar) AS mes,
+                  DATE_FORMAT(STR_TO_DATE(CONCAT(YEAR(DatIniTar), WEEK(DatIniTar), '0'), '%X%V%w'), '%d/%m/%Y') AS inicio_semana,
+                  DATE_FORMAT(STR_TO_DATE(CONCAT(YEAR(DatIniTar), WEEK(DatIniTar), '6'), '%X%V%w'), '%d/%m/%Y') AS fim_semana,
+                  COUNT(CodTar) AS total,
+                  TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(TepTar)) / COUNT(CodTar)), '%H:%i') AS media_tempo,
+                  SUM(PonTar * 10) AS pontos
+                FROM tarefa
+                WHERE ConTar = 'S' AND CodUsu_Tar = :CodUsu_Tar
+                GROUP BY YEAR(DatIniTar)";
+
+        if ($groupBy === 'mes') {
+            $sql .= ", MONTH(DatIniTar)";
+        } elseif ($groupBy === 'semana') {
+            $sql .= ", WEEK(DatIniTar)";
+        }
+
+        $conn = $this->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':CodUsu_Tar' => $CodUsu]);
+
+        return $stmt->fetchAll();
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM tarefa WHERE CodTar = :Codtar";
+        $conn = $this->getConnection();
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute([':Codtar' => $this->getCodTar()]);
     }
 }
