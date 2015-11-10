@@ -83,4 +83,41 @@ class UsuarioTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(\Exception::class);
         $this->object->getPeloEmailESenha('usuario', 'senha-invalida');
     }
+
+    public function testSalvarUsuarioComSucesso()
+    {
+        /** @var Database|\PHPUnit_Framework_MockObject_MockObject $conn */
+        $conn = $this->getMockBuilder(Database::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['salvar'])
+            ->getMock();
+
+        $conn->expects($this->once())
+            ->method('salvar')
+            ->willReturn(true);
+
+        $this->object->setConexao($conn);
+
+        $return = $this->object->salvar();
+
+        $this->assertTrue($return instanceof Usuario);
+    }
+
+    public function testSalvarUsuarioComFalha()
+    {
+        /** @var Database|\PHPUnit_Framework_MockObject_MockObject $conn */
+        $conn = $this->getMockBuilder(Database::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['salvar'])
+            ->getMock();
+
+        $conn->expects($this->once())
+            ->method('salvar')
+            ->willReturn(false);
+
+        $this->object->setConexao($conn);
+
+        $this->setExpectedException(\Exception::class);
+        $this->object->salvar();
+    }
 }

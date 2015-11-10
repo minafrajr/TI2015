@@ -279,21 +279,22 @@ class Tarefa extends Entidade
     public function getRelatorioPeloUsuario($CodUsu, $groupBy)
     {
         $sql = "SELECT
-                  YEAR(DatIniTar) AS ano,
-                  MONTH(DatIniTar) AS mes,
-                  DATE_FORMAT(STR_TO_DATE(CONCAT(YEAR(DatIniTar), WEEK(DatIniTar), '0'), '%X%V%w'), '%d/%m/%Y') AS inicio_semana,
-                  DATE_FORMAT(STR_TO_DATE(CONCAT(YEAR(DatIniTar), WEEK(DatIniTar), '6'), '%X%V%w'), '%d/%m/%Y') AS fim_semana,
-                  COUNT(CodTar) AS total,
-                  TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(TepTar)) / COUNT(CodTar)), '%H:%i') AS media_tempo,
-                  SUM(PonTar * 10) AS pontos
-                FROM tarefa
-                WHERE ConTar = 'S' AND CodUsu_Tar = :CodUsu_Tar
-                GROUP BY YEAR(DatIniTar)";
+                  YEAR(t.DatIniTar) AS ano,
+                  MONTH(t.DatIniTar) AS mes,
+                  DATE_FORMAT(STR_TO_DATE(CONCAT(YEAR(t.DatIniTar), WEEK(t.DatIniTar), '0'), '%X%V%w'), '%d/%m/%Y') AS inicio_semana,
+                  DATE_FORMAT(STR_TO_DATE(CONCAT(YEAR(t.DatIniTar), WEEK(t.DatIniTar), '6'), '%X%V%w'), '%d/%m/%Y') AS fim_semana,
+                  COUNT(t.CodTar) AS total,
+                  TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(t.TepTar)) / COUNT(t.CodTar)), '%H:%i') AS media_tempo,
+                  SUM(p.TotPts) AS pontos
+                FROM tarefa t
+                INNER JOIN pontuacao_usuario p ON t.CodTar = p.CodTarPon
+                WHERE t.ConTar = 'S' AND t.CodUsu_Tar = :CodUsu_Tar
+                GROUP BY YEAR(t.DatIniTar)";
 
         if ($groupBy === 'mes') {
-            $sql .= ", MONTH(DatIniTar)";
+            $sql .= ", MONTH(t.DatIniTar)";
         } elseif ($groupBy === 'semana') {
-            $sql .= ", WEEK(DatIniTar)";
+            $sql .= ", WEEK(t.DatIniTar)";
         }
 
         $conn = $this->getConexao();

@@ -31,7 +31,13 @@ class PontosController extends Controller
         $this->setTela('Minha Pontuação');
         $codUsu = $this->getUsuario()->getCodUsu();
 
-        $sql = "SELECT SUM(PonTar * 10) AS pontos from tarefa WHERE ConTar = 'S' AND CodUsu_Tar = :CodUsu;";
+        $sql = "SELECT
+                    SUM(Totpts) AS pontos
+                FROM pontuacao_usuario p
+                INNER JOIN tarefa t on t.CodTar = p.CodTarPon
+                WHERE
+                    t.ConTar = 'S'
+                    AND t.CodUsu_Tar = :CodUsu;";
         $result = Conexao::getInstancia()->getConexao()->recuperarTudo($sql, [':CodUsu' => $codUsu]);
         $pontos = empty($result) ? 0 : (int)$result[0]['pontos'];
 
