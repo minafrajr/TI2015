@@ -26,6 +26,9 @@
 </form>
 <br />
 
-<div><a href="usuario_cadastrar.php">Cadastre-se</a></div>
+<div>
+    <a href="/usuario_cadastrar.php">Cadastre-se</a>
+    <a href="/usuario_recuperar_senha.php">Recuperar senha</a>
+</div>
 
 <?php require_once 'footer.php' ?>

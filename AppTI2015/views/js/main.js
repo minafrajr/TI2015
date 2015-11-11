@@ -81,8 +81,8 @@ function validaFormCadastroUsuario() {
         return false;
     }
 
-    if ($senha.value === '') {
-        alert('Preencha a senha');
+    if ($senha.value !== $confSenha.value) {
+        alert('As senhas devem ser idênticas!');
         $senha.focus();
         return false;
     }
@@ -123,6 +123,19 @@ function validaFormCadastroTarefa() {
     return true;
 }
 
+function validaFormRecuperarSenha() {
+    var $senha = document.querySelector('#senha'),
+        $confSenha = document.querySelector('#conf_senha');
+
+    if ($senha.value !== $confSenha.value) {
+        alert('As senhas devem ser idênticas!');
+        $senha.focus();
+        return false;
+    }
+
+    return true;
+}
+
 // Código retirado do site https://css-tricks.com/value-bubbles-for-range-inputs/
 function modifyOffset() {
     var el, newPoint, newPlace, offset, siblings, k;
@@ -156,7 +169,8 @@ function modifyInputs() {
             if ("fireEvent" in inputs[i]) {
                 inputs[i].fireEvent("oninput");
             } else {
-                var evt = document.createEvent("HTMLEvents");
+                var evt = document.create()
+                Event("HTMLEvents");
                 evt.initEvent("input", false, true);
                 inputs[i].dispatchEvent(evt);
             }

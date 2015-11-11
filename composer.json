@@ -5,5 +5,8 @@
             "Data\\": ["AppTI2015/Data/", "tests/AppTI2015/Data/"],
             "Model\\": ["AppTI2015/Model/", "tests/AppTI2015/Model/"]
         }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^5.2"
     }
 }

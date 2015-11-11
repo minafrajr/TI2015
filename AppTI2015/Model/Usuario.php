@@ -212,6 +212,46 @@ class Usuario extends Entidade
         return $this->getUsuario($result[0]['CodUsu']);
     }
 
+    public function getPeloEmailEDataDeNascimento($email, $dataNascimento)
+    {
+        $query = "SELECT CodUsu
+				  FROM usuario
+				  WHERE DatNasUsu = :DatNasUsu AND EmaUsu = :EmaUsu";
+
+        //repassa os parãmetros
+        $query_params = [':DatNasUsu' => $dataNascimento, ':EmaUsu' => $email];
+
+        //executa a consulta no banco
+        $conn = $this->getConexao();
+        $result = $conn->recuperarTudo($query, $query_params);
+
+        if (empty($result)) {
+            throw new \Exception("Usuário e data de nascimento inválidos");
+        }
+
+        return $this->getUsuario($result[0]['CodUsu']);
+    }
+
+    public function getPeloEmailHash($hash)
+    {
+        $query = "SELECT CodUsu
+				  FROM usuario
+				  WHERE MD5(EmaUsu) = :EmaUsu";
+
+        //repassa os parãmetros
+        $query_params = [':EmaUsu' => $hash];
+
+        //executa a consulta no banco
+        $conn = $this->getConexao();
+        $result = $conn->recuperarTudo($query, $query_params);
+
+        if (empty($result)) {
+            throw new \Exception("O hash informado é inválido");
+        }
+
+        return $this->getUsuario($result[0]['CodUsu']);
+    }
+
     public function verificaSeEmailExiste($email)
     {
         $query = "SELECT CodUsu
