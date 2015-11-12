@@ -1,4 +1,0 @@
-﻿function valida_form() {
-
-	
-}
